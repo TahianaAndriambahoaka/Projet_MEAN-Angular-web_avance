@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'Projet_MEAN-Angular-web_avance'`, () => {
+  it(`should have as title 'm1p10mean-tahiana-tsantaniaina'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Projet_MEAN-Angular-web_avance');
+    expect(app.title).toEqual('m1p10mean-tahiana-tsantaniaina');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('Projet_MEAN-Angular-web_avance app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('m1p10mean-tahiana-tsantaniaina app is running!');
   });
 });
