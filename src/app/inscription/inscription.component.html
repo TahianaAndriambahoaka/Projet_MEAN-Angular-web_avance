@@ -10,7 +10,7 @@
 
                   <div class="pdp" (click)="changePDP()">
                     <img id="profileImage" [src]="pdpURL" alt="Photo de profil" class="pdp__image">
-                    <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" style="display: none;">
+                    <input id="imageUpload" type="file" placeholder="Photo" style="display: none;" accept="image/*" (change)=selectPDP($event)>
                   </div>
 
               </div>
