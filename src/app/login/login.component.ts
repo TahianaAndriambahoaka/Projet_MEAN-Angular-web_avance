@@ -14,8 +14,7 @@ export class LoginComponent {
   login: string = "";
   mdp: string = "";
 
-  constructor( private fb: FormBuilder, private router:Router) {
-    // Form element defined below
+  constructor(private fb: FormBuilder, private router:Router) {
     this.form = this.fb.group({
       login: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       mdp: ['', [Validators.required]],

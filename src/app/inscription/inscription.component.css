@@ -42,3 +42,71 @@
 .dropzone.hovering {
   border: 10px dashed #2465f1;
 }
+
+#error {
+  display:none;
+  /* min-width: 250px; */
+  /* margin-left: -125px; */
+  /* background-color: #333; */
+  background-color: rgb(255, 0, 0);
+  color: #fff;
+  text-align: center;
+  /* border-radius: 2px; */
+  border-radius: 25px;
+  padding: 16px;
+  /* position: fixed; */
+  /* z-index: 1; */
+  /* left: 50%; */
+  /* bottom: 30px; */
+  font-size: 17px;
+}
+
+#error.show {
+  display: block;
+  -webkit-animation: fadein 1s, fadeout 1s 9s;
+  animation: fadein 1s, fadeout 1s 9s;
+}
+
+#success {
+  display:none;
+  /* min-width: 250px; */
+  /* margin-left: -125px; */
+  /* background-color: #333; */
+  background-color: rgb(0, 145, 43);
+  color: #fff;
+  text-align: center;
+  /* border-radius: 2px; */
+  border-radius: 25px;
+  padding: 16px;
+  /* position: fixed; */
+  /* z-index: 1; */
+  /* left: 50%; */
+  /* bottom: 30px; */
+  font-size: 17px;
+}
+
+#success.show {
+  display: block;
+  -webkit-animation: fadein 1s, fadeout 1s 9s;
+  animation: fadein 1s, fadeout 1s 9s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
