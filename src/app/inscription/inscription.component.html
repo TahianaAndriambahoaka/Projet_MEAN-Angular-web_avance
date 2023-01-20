@@ -8,8 +8,11 @@
 
               <div class="dropzone" dropzone (hovered)="toggleHover($event)" (dropped)="onDrop($event)" [class.hovering]="isHovering">
 
-                  <div class="pdp" (click)="changePDP()">
+                  <div class="pdp w3-container" (click)="changePDP()">
                     <img id="profileImage" [src]="pdpURL" alt="Photo de profil" class="pdp__image">
+                    <div *ngIf="percentage > 0" class="w3-light-grey w3-round-xlarge" style="width: 100%;">
+                      <div class="w3-container w3-gray w3-round-xlarge" style="width:{{percentage}}%">&nbsp;&nbsp;{{percentage}}%</div>
+                    </div>
                     <input id="imageUpload" type="file" placeholder="Photo" style="display: none;" accept="image/*" (change)=selectPDP($event)>
                   </div>
 
