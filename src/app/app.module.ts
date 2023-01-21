@@ -14,6 +14,7 @@ import { InscriptionComponent } from './inscription/inscription.component';
 import { DropzoneDirective } from './directives/dropzone.directive';
 import { SafePipe } from './safe.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    BrowserAnimationsModule
   ],
   providers: [SafePipe, FileUploadService],
   bootstrap: [AppComponent]
