@@ -7,6 +7,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -16,7 +19,10 @@ const MaterialComponents = [
   MatFormFieldModule,
   MatSelectModule,
   MatInputModule,
-  MatDialogModule
+  MatDialogModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  NgxMaterialTimepickerModule
 ];
 
 @NgModule({

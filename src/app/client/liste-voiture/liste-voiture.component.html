@@ -2,9 +2,9 @@
   <button mat-icon-button class="example-icon" [routerLink]="['/client']">
     <mat-icon>home</mat-icon>
   </button>
-  <span>Bienvenue cher client</span>
+  <span style="font-size: large;">Bienvenue cher client</span>
   <span class="example-spacer"></span>
-  <button mat-button class="example-icon" [routerLink]="['/']">
+  <button mat-button class="example-icon" [routerLink]="['/']" style="font-size: large;">
     Se déconnecter
     <mat-icon>logout</mat-icon>
   </button>
@@ -31,7 +31,7 @@
     <mat-icon>search</mat-icon>
   </button>
   <button mat-stroked-button style="float: right; height: 55px; margin-bottom: 17px; font-size: medium;" color="primary" (click)="openDialog()">Faire un dépôt de voiture</button>
-  
+
 
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
 
@@ -70,7 +70,7 @@
         <button mat-button [routerLink]="['/details']" color="warn" style="color: inherit; font-weight: normal;">
           Plus de détails
           <mat-icon>add_circle</mat-icon>
-        </button>   
+        </button>
       </td>
     </ng-container>
 
@@ -81,7 +81,7 @@
         <button mat-button [routerLink]="['/historique']" color="warn" style="color: inherit; font-weight: normal;">
           Historique des réparations
           <mat-icon>history</mat-icon>
-        </button>        
+        </button>
       </td>
     </ng-container>
 

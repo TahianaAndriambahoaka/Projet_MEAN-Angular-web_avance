@@ -51,9 +51,5 @@ export class ListeVoitureComponent implements AfterViewInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(DepotDeVoitureComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 }
