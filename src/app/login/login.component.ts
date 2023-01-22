@@ -37,7 +37,7 @@ export class LoginComponent {
         x!.className = "show";
         setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
       } else {
-        this.router.navigate(['/inscription']);
+        this.router.navigate(['/client']);
       }
     }
   }

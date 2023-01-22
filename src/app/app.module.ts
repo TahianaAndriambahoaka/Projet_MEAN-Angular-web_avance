@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { MaterialModule } from './material/material.module';
+import { NgModule, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AngularFireModule } from '@angular/fire/compat';
@@ -15,6 +16,11 @@ import { DropzoneDirective } from './directives/dropzone.directive';
 import { SafePipe } from './safe.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ListeVoitureComponent } from './client/liste-voiture/liste-voiture.component';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { DepotDeVoitureComponent } from './client/depot-de-voiture/depot-de-voiture.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +28,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     InscriptionComponent,
     DropzoneDirective,
-    SafePipe
+    SafePipe,
+    ListeVoitureComponent,
+    DepotDeVoitureComponent
   ],
   imports: [
     BrowserModule,
@@ -32,9 +40,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule,
+    MatSortModule,
+    MatTableModule
   ],
-  providers: [SafePipe, FileUploadService],
+  providers: [SafePipe, FileUploadService, LiveAnnouncer],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
