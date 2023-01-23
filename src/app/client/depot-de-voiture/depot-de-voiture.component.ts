@@ -1,18 +1,22 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { map, Observable, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-depot-de-voiture',
   templateUrl: './depot-de-voiture.component.html',
   styleUrls: ['./depot-de-voiture.component.css']
 })
-export class DepotDeVoitureComponent {
+export class DepotDeVoitureComponent implements OnInit {
   public form!: FormGroup;
   isSubmitted = false;
-  numero: string = '';
-  marque: string = '';
+  numero!: string | null;
+  marque!: string | null;
   date!: Date;
+  formControl = new FormControl('');
+  filteredOptions!: Observable<string[]>;
+  marques: string[] = ['Hydrogen', 'Beryllium', 'Neon'];
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -20,6 +24,13 @@ export class DepotDeVoitureComponent {
       marque: ['', [Validators.required]],
       date: ['', [Validators.required]]
     });
+  }
+
+  ngOnInit() {
+    this.filteredOptions = this.formControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
   }
 
   onDateChange(event: MatDatepickerInputEvent<Date> | any) {
@@ -39,4 +50,9 @@ export class DepotDeVoitureComponent {
   get errorControl() {
     return this.form.controls;
   }
+  
+  private _filter(value: string): string[] {
+    return this.marques.filter(option => option.toLowerCase().includes(value.toLowerCase()));
+  }
+
 }
