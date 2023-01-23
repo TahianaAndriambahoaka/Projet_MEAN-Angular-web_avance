@@ -2,7 +2,7 @@
 <!-- <div #client></div> -->
 
 
-<div style="padding-left: 10%; padding-right: 10%; padding-top: 20px; padding-bottom: 100px;">
+<div style="padding-left: 10%; padding-right: 10%; padding-top: 20px; padding-bottom: 100px; background-color: rgb(216, 228, 228);">
   <h1>Liste des voitures actuellement dans le garage</h1>
 
 
@@ -17,6 +17,9 @@
     <mat-form-field class="example-full-width" appearance="fill"style="margin-left: 10px;">
       <mat-label>Marque</mat-label>
       <input type="text" aria-label="Number" matInput [(ngModel)]="rechercheMarque" formControlName="rechercheMarque"[formControl]="formControl" [matAutocomplete]="auto">
+      <button *ngIf="rechercheMarque" matSuffix mat-icon-button aria-label="Clear" (click)="rechercheMarque=null">
+        <mat-icon>close</mat-icon>
+      </button>
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         <mat-option *ngFor="let marque of filteredOptions | async" [value]="marque">
           {{marque}}
@@ -30,7 +33,10 @@
   </form>
 
 
-  <button mat-stroked-button style="float: right; height: 55px; margin-bottom: 15px; font-size: medium;" color="primary" (click)="openDialog()">Faire un dépôt de voiture</button>
+  <button mat-raised-button style="float: right; height: 55px; margin-bottom: 15px; font-size: medium; background-color: rgb(245, 244, 244); color: black;" (click)="openDialog()">
+    Faire un dépôt de voiture
+    <mat-icon>directions_car</mat-icon>
+  </button>
 
 
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
@@ -68,9 +74,9 @@
     <ng-container matColumnDef="reparation_avancament">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element; let i = index" style="text-align: center;">
-        <button mat-button [routerLink]="['/client/reparation-avancement', element.numero]" (click)="makeActive(i)" color="warn" style="color: inherit; font-weight: normal; z-index: 0;">
+        <button mat-button class="hover" [routerLink]="['/client/reparation-avancement', element.numero]" (click)="makeActive(i)" style="color: inherit; font-weight: normal; z-index: 0;">
           Réparations avec avancement
-          <mat-icon>add_circle</mat-icon>
+          <mat-icon>build</mat-icon>
         </button>
       </td>
     </ng-container>
@@ -79,9 +85,9 @@
     <ng-container matColumnDef="facture_paiement">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element; let i = index" style="text-align: center;">
-        <button mat-button [routerLink]="['/client/facture-etat-paiement', element.numero]" (click)="makeActive(i)" color="warn" style="color: inherit; font-weight: normal; z-index: 0;">
+        <button mat-button class="hover" [routerLink]="['/client/facture-etat-paiement', element.numero]" (click)="makeActive(i)" style="color: inherit; font-weight: normal; z-index: 0;">
           Facture et état de paiement
-          <mat-icon>add_circle</mat-icon>
+          <mat-icon>local_atm</mat-icon>
         </button>
       </td>
     </ng-container>
@@ -90,7 +96,7 @@
     <ng-container matColumnDef="historique">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element; let i = index" style="text-align: center;">
-        <button mat-button [routerLink]="['/client/historique-reparation', element.numero]" (click)="makeActive(i)" color="warn" style="color: inherit; font-weight: normal; z-index: 0;">
+        <button mat-button class="hover" [routerLink]="['/client/historique-reparation', element.numero]" (click)="makeActive(i)" style="color: inherit; font-weight: normal; z-index: 0;">
           Historique des réparations
           <mat-icon>history</mat-icon>
         </button>

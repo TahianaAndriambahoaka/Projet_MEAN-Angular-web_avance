@@ -15,7 +15,7 @@ import { InscriptionComponent } from './inscription/inscription.component';
 import { DropzoneDirective } from './directives/dropzone.directive';
 import { SafePipe } from './safe.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ListeVoitureComponent } from './client/liste-voiture/liste-voiture.component';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSortModule } from '@angular/material/sort';
@@ -27,6 +27,7 @@ import { FooterComponent } from './footer/footer.component';
 import { FactureEtatPaiementComponent } from './client/facture-etat-paiement/facture-etat-paiement.component';
 import { SeparateurMillerPipe } from './separateur-miller.pipe';
 import { HistoriqueReparationComponent } from './client/historique-reparation/historique-reparation.component';
+
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -60,7 +61,9 @@ registerLocaleData(localeFr, 'fr');
     BrowserAnimationsModule,
     MaterialModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule
   ],
   providers: [SafePipe, FileUploadService, LiveAnnouncer, { provide: LOCALE_ID, useValue: "fr-FR" }],
   bootstrap: [AppComponent]
