@@ -26,6 +26,7 @@ import { HeaderComponent } from './client/header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { FactureEtatPaiementComponent } from './client/facture-etat-paiement/facture-etat-paiement.component';
 import { SeparateurMillerPipe } from './separateur-miller.pipe';
+import { HistoriqueReparationComponent } from './client/historique-reparation/historique-reparation.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SeparateurMillerPipe } from './separateur-miller.pipe';
     HeaderComponent,
     FooterComponent,
     FactureEtatPaiementComponent,
-    SeparateurMillerPipe
+    SeparateurMillerPipe,
+    HistoriqueReparationComponent
   ],
   imports: [
     BrowserModule,

@@ -89,8 +89,8 @@
 
     <ng-container matColumnDef="historique">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element" style="text-align: center;">
-        <button mat-button [routerLink]="['/historique']" color="warn" style="color: inherit; font-weight: normal; z-index: 0;">
+      <td mat-cell *matCellDef="let element; let i = index" style="text-align: center;">
+        <button mat-button [routerLink]="['/client/historique-reparation', element.numero]" (click)="makeActive(i)" color="warn" style="color: inherit; font-weight: normal; z-index: 0;">
           Historique des réparations
           <mat-icon>history</mat-icon>
         </button>

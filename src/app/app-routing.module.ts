@@ -5,6 +5,7 @@ import { InscriptionComponent } from './inscription/inscription.component';
 import { LoginComponent } from './login/login.component';
 import { ReparationAvancementComponent } from './client/reparation-avancement/reparation-avancement.component';
 import { FactureEtatPaiementComponent } from './client/facture-etat-paiement/facture-etat-paiement.component';
+import { HistoriqueReparationComponent } from './client/historique-reparation/historique-reparation.component';
 
 const routes: Routes = [
   { path: "", component: LoginComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
     children: [
       { path: 'reparation-avancement/:numero', component: ReparationAvancementComponent },
       { path: 'facture-etat-paiement/:numero', component: FactureEtatPaiementComponent },
+      { path: 'historique-reparation/:numero', component: HistoriqueReparationComponent },
     ]
   }
 ];
