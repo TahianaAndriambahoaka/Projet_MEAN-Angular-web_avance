@@ -6,31 +6,31 @@
   <h1>Liste des voitures actuellement dans le garage</h1>
 
 
-  <mat-form-field class="example-form-field" appearance="fill">
-    <mat-label>Numéro</mat-label>
-    <input matInput type="text" [(ngModel)]="rechercheNumero">
-    <button *ngIf="rechercheNumero" matSuffix mat-icon-button aria-label="Clear" (click)="rechercheNumero=null">
-      <mat-icon>close</mat-icon>
+  <form class="example-form" [formGroup]="form" (submit)="rechercher()" style="float: left;">
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-label>Numéro</mat-label>
+      <input matInput type="text" [(ngModel)]="rechercheNumero" formControlName="rechercheNumero">
+      <button *ngIf="rechercheNumero" matSuffix mat-icon-button aria-label="Clear" (click)="rechercheNumero=null">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill"style="margin-left: 10px;">
+      <mat-label>Marque</mat-label>
+      <input type="text" aria-label="Number" matInput [(ngModel)]="rechercheMarque" formControlName="rechercheMarque"[formControl]="formControl" [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let marque of filteredOptions | async" [value]="marque">
+          {{marque}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <button mat-raised-button style="margin-left: 10px; height: 55px; margin-bottom: 15px; background-color: rgb(245, 244, 244);">
+      Rechercher
+      <mat-icon>search</mat-icon>
     </button>
-  </mat-form-field>
+  </form>
 
 
-  <mat-form-field class="example-form-field" appearance="fill" style="margin-left: 10px; margin-top: 10px;">
-    <mat-label>Marque</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let marque of marques" [value]="marque.value">
-        {{marque.value}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-
-  <button mat-raised-button style="margin-left: 10px; height: 55px; margin-bottom: 17px;">
-    Rechercher
-    <mat-icon>search</mat-icon>
-  </button>
-
-  <button mat-stroked-button style="float: right; height: 55px; margin-top: 10px; margin-bottom: 17px; font-size: medium;" color="primary" (click)="openDialog()">Faire un dépôt de voiture</button>
+  <button mat-stroked-button style="float: right; height: 55px; margin-bottom: 15px; font-size: medium;" color="primary" (click)="openDialog()">Faire un dépôt de voiture</button>
 
 
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">

@@ -8,22 +8,25 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from 'src/app/footer/footer.component';
 import { ReparationAvancementComponent } from '../reparation-avancement/reparation-avancement.component';
 import { Router } from '@angular/router';
+import { map, Observable, startWith } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { OnInit } from '@angular/core';
 
 const ELEMENT_DATA = [
-  {numero: 1, marque: 'Hydrogen', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 2, marque: 'Helium', status: 'En cours de réparation', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 3, marque: 'Lithium', status: 'Réparée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 4, marque: 'Beryllium', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 5, marque: 'Boron', status: 'En cours de réparation', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 6, marque: 'Carbon', status: 'Réparée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 7, marque: 'Nitrogen', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 8, marque: 'Oxygen', status: 'En cours de réparation', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 9, marque: 'Fluorine', status: 'Réparée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 10, marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 10, marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 10, marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 10, marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: 10, marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '1', marque: 'Hydrogen', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '2', marque: 'Helium', status: 'En cours de réparation', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '3', marque: 'Lithium', status: 'Réparée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '4', marque: 'Beryllium', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '5', marque: 'Boron', status: 'En cours de réparation', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '6', marque: 'Carbon', status: 'Réparée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '7', marque: 'Nitrogen', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '8', marque: 'Oxygen', status: 'En cours de réparation', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '9', marque: 'Fluorine', status: 'Réparée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '10', marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '10', marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '10', marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '10', marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '10', marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
 ];
 
 @Component({
@@ -32,26 +35,36 @@ const ELEMENT_DATA = [
   styleUrls: ['./liste-voiture.component.css'],
   entryComponents: [HeaderComponent, FooterComponent, ReparationAvancementComponent]
 })
-export class ListeVoitureComponent implements AfterViewInit {
+export class ListeVoitureComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['numero', 'marque', 'status', 'reparation_avancament', 'facture_paiement', 'historique'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-  rechercheNumero!: string | null;
-  marques = [
-    {value: 'steak-0'},
-    {value: 'pizza-1'},
-    {value: 'tacos-2'},
-  ];
+  marques: string[] = ['Hydrogen', 'Beryllium', 'Neon'];
   topOfPage: any;
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, public dialog: MatDialog, private el: ElementRef, private router: Router) {
+  public form!: FormGroup;
+  formControl = new FormControl('');
+  rechercheNumero!: string | null;
+  rechercheMarque!: string | null;
+  filteredOptions!: Observable<string[]>;
+
+  constructor(private _liveAnnouncer: LiveAnnouncer, public dialog: MatDialog, private el: ElementRef, private router: Router, private fb: FormBuilder) {
     this.topOfPage = el.nativeElement.querySelector('#top');
+    this.form = this.fb.group({
+      rechercheNumero: [''],
+      rechercheMarque: ['']
+    });
   }
 
-  // @ViewChild('client') targetElement!: ElementRef;
+  ngOnInit() {
+    this.filteredOptions = this.formControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+  }
+
   @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-    // window.addEventListener('scroll', this.onScroll);
   }
 
   announceSortChange(sortState: Sort | any) {
@@ -63,7 +76,7 @@ export class ListeVoitureComponent implements AfterViewInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(DepotDeVoitureComponent);
+    this.dialog.open(DepotDeVoitureComponent);
   }
 
   @HostListener('window:scroll', [])
@@ -81,30 +94,27 @@ export class ListeVoitureComponent implements AfterViewInit {
     document.getElementById('top')!.scrollIntoView({behavior: 'smooth'});
   }
 
-  // onScroll = () => {
-  //   const target = this.targetElement.nativeElement;
-  //   const targetPosition = target.getBoundingClientRect().top;
-  //   const screenPosition = window.innerHeight/1000000;
-
-  //   if (targetPosition >= screenPosition) {
-  //     this.router.navigate(['/client']);
-  //   }
-  // }
-
   makeActive(index: number) {
     this.dataSource.data.forEach((element: any, i) => {
       element.active = i === index;
     });
-    if(document.getElementById('clientreparationavancement')) {
-      document.getElementById('clientreparationavancement')!.scrollIntoView({behavior: 'smooth'});
-    }
-    if(document.getElementById('factureetatpaiement')) {
-      document.getElementById('factureetatpaiement')!.scrollIntoView({behavior: 'smooth'});
-    }
-    if(document.getElementById('historiquereparation')) {
-      document.getElementById('historiquereparation')!.scrollIntoView({behavior: 'smooth'});
-    }
-
+    if(document.getElementById('clientreparationavancement')) document.getElementById('clientreparationavancement')!.scrollIntoView({behavior: 'smooth'});
+    if(document.getElementById('factureetatpaiement')) document.getElementById('factureetatpaiement')!.scrollIntoView({behavior: 'smooth'});
+    if(document.getElementById('historiquereparation')) document.getElementById('historiquereparation')!.scrollIntoView({behavior: 'smooth'});
   }
 
+  private _filter(value: string): string[] {
+    return this.marques.filter(option => option.toLowerCase().includes(value.toLowerCase()));
+  }
+
+  rechercher() {
+    var tab: any[] = [];
+    ELEMENT_DATA.forEach(element => {
+      if(element.numero.includes(this.rechercheNumero!) || element.marque.includes(this.rechercheMarque!) || (!this.rechercheNumero && !this.rechercheMarque)) {
+        tab.push(element);
+      }
+    });
+    this.dataSource = new MatTableDataSource(tab);
+    this.dataSource.sort = this.sort;
+  }
 }
