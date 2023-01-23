@@ -98,6 +98,9 @@ export class ListeVoitureComponent implements AfterViewInit {
     if(document.getElementById('clientreparationavancement')) {
       document.getElementById('clientreparationavancement')!.scrollIntoView({behavior: 'smooth'});
     }
+    if(document.getElementById('factureetatpaiement')) {
+      document.getElementById('factureetatpaiement')!.scrollIntoView({behavior: 'smooth'});
+    }
 
   }
 

@@ -1,7 +1,8 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { FooterComponent } from 'src/app/footer/footer.component';
 import { HeaderComponent } from '../header/header.component';
 
@@ -28,13 +29,19 @@ const ELEMENT_DATA = [
   styleUrls: ['./reparation-avancement.component.css'],
   entryComponents: [HeaderComponent, FooterComponent]
 })
-export class ReparationAvancementComponent implements AfterViewInit {
+export class ReparationAvancementComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['reparation', 'etat_avancement'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   numero!: string;
   marque!: string;
 
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(private _liveAnnouncer: LiveAnnouncer, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.numero = params.get('numero')!;
+    });
+  }
 
   @ViewChild('clientreparationavancement') inputElement!: ElementRef;
   @ViewChild(MatSort) sort!: MatSort;

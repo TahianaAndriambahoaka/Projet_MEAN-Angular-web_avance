@@ -68,7 +68,7 @@
     <ng-container matColumnDef="reparation_avancament">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element; let i = index" style="text-align: center;">
-        <button mat-button [routerLink]="['/client/reparation-avancement']" (click)="makeActive(i)" color="warn" style="color: inherit; font-weight: normal; z-index: 0;">
+        <button mat-button [routerLink]="['/client/reparation-avancement', element.numero]" (click)="makeActive(i)" color="warn" style="color: inherit; font-weight: normal; z-index: 0;">
           Réparations avec avancement
           <mat-icon>add_circle</mat-icon>
         </button>
@@ -78,8 +78,8 @@
 
     <ng-container matColumnDef="facture_paiement">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element" style="text-align: center;">
-        <button mat-button [routerLink]="['/client/facture-etat-paiement']" color="warn" style="color: inherit; font-weight: normal; z-index: 0;">
+      <td mat-cell *matCellDef="let element; let i = index" style="text-align: center;">
+        <button mat-button [routerLink]="['/client/facture-etat-paiement', element.numero]" (click)="makeActive(i)" color="warn" style="color: inherit; font-weight: normal; z-index: 0;">
           Facture et état de paiement
           <mat-icon>add_circle</mat-icon>
         </button>

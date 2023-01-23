@@ -25,6 +25,7 @@ import { ReparationAvancementComponent } from './client/reparation-avancement/re
 import { HeaderComponent } from './client/header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { FactureEtatPaiementComponent } from './client/facture-etat-paiement/facture-etat-paiement.component';
+import { SeparateurMillerPipe } from './separateur-miller.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { FactureEtatPaiementComponent } from './client/facture-etat-paiement/fac
     ReparationAvancementComponent,
     HeaderComponent,
     FooterComponent,
-    FactureEtatPaiementComponent
+    FactureEtatPaiementComponent,
+    SeparateurMillerPipe
   ],
   imports: [
     BrowserModule,

@@ -13,8 +13,8 @@ const routes: Routes = [
     path: 'client',
     component: ListeVoitureComponent,
     children: [
-      { path: 'reparation-avancement', component: ReparationAvancementComponent },
-      { path: 'facture-etat-paiement', component: FactureEtatPaiementComponent },
+      { path: 'reparation-avancement/:numero', component: ReparationAvancementComponent },
+      { path: 'facture-etat-paiement/:numero', component: FactureEtatPaiementComponent },
     ]
   }
 ];
