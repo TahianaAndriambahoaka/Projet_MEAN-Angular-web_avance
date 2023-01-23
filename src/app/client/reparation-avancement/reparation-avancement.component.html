@@ -1,7 +1,7 @@
 <h1 #clientreparationavancement id="clientreparationavancement">Liste des réparations avec l'état d'avancement</h1>
 <p><b>Numéro : </b>{{numero}}</p>
 <p><b>Marque : </b>Toyota Fortuner</p>
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8" style="width: 100%;">
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
 
   <ng-container matColumnDef="reparation">
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
