@@ -3,11 +3,20 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InscriptionComponent } from './inscription/inscription.component';
 import { LoginComponent } from './login/login.component';
+import { ReparationAvancementComponent } from './client/reparation-avancement/reparation-avancement.component';
+import { FactureEtatPaiementComponent } from './client/facture-etat-paiement/facture-etat-paiement.component';
 
 const routes: Routes = [
   { path: "", component: LoginComponent },
   { path: "inscription", component: InscriptionComponent },
-  { path: "client", component: ListeVoitureComponent }
+  {
+    path: 'client',
+    component: ListeVoitureComponent,
+    children: [
+      { path: 'reparation-avancement', component: ReparationAvancementComponent },
+      { path: 'facture-etat-paiement', component: FactureEtatPaiementComponent },
+    ]
+  }
 ];
 
 @NgModule({

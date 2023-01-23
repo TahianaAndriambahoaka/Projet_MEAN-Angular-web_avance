@@ -1,0 +1,34 @@
+<!-- <header></header> -->
+
+<!-- <div style="padding-left: 10%; padding-right: 10%; padding-top: 50px; padding-bottom: 100px;"> -->
+  <h1 #clientreparationavancement id="clientreparationavancement">Liste des réparations avec l'état d'avancement</h1>
+  <p><b>Numéro : </b>56789WWT</p>
+  <p><b>Marque : </b>Toyota Fortuner</p>
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8" style="width: 100%;">
+
+    <ng-container matColumnDef="reparation">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+        Réparation
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.reparation}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="etat_avancement">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+        État d'avancement
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button *ngIf="element.etat_avancement == 'En cours de réparation'"  style="background-color: #c0a911; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>{{element.etat_avancement}}</button>
+        <button *ngIf="element.etat_avancement == 'Réparée'"  style="background-color: darkcyan; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>{{element.etat_avancement}}</button>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+<!-- </div> -->
+
+<!-- <footer></footer> -->

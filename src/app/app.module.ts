@@ -21,6 +21,10 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { DepotDeVoitureComponent } from './client/depot-de-voiture/depot-de-voiture.component';
+import { ReparationAvancementComponent } from './client/reparation-avancement/reparation-avancement.component';
+import { HeaderComponent } from './client/header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { FactureEtatPaiementComponent } from './client/facture-etat-paiement/facture-etat-paiement.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,11 @@ import { DepotDeVoitureComponent } from './client/depot-de-voiture/depot-de-voit
     DropzoneDirective,
     SafePipe,
     ListeVoitureComponent,
-    DepotDeVoitureComponent
+    DepotDeVoitureComponent,
+    ReparationAvancementComponent,
+    HeaderComponent,
+    FooterComponent,
+    FactureEtatPaiementComponent
   ],
   imports: [
     BrowserModule,
