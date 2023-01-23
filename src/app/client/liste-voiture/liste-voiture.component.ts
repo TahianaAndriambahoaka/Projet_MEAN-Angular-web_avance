@@ -110,7 +110,7 @@ export class ListeVoitureComponent implements AfterViewInit, OnInit {
   rechercher() {
     var tab: any[] = [];
     ELEMENT_DATA.forEach(element => {
-      if(element.numero.includes(this.rechercheNumero!) || element.marque.includes(this.rechercheMarque!) || (!this.rechercheNumero && !this.rechercheMarque)) {
+      if((element.numero.includes(this.rechercheNumero!)&&element.marque.includes(this.rechercheMarque!)&&this.rechercheMarque&&this.rechercheNumero) ||(element.numero.includes(this.rechercheNumero!)&&!this.rechercheMarque) || (element.marque.includes(this.rechercheMarque!)&&!this.rechercheNumero) || (!this.rechercheNumero&&!this.rechercheMarque)) {
         tab.push(element);
       }
     });
