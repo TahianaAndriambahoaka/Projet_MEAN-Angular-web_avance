@@ -1,5 +1,5 @@
 import { MaterialModule } from './material/material.module';
-import { NgModule, ViewChild } from '@angular/core';
+import { NgModule, ViewChild, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AngularFireModule } from '@angular/fire/compat';
@@ -27,6 +27,11 @@ import { FooterComponent } from './footer/footer.component';
 import { FactureEtatPaiementComponent } from './client/facture-etat-paiement/facture-etat-paiement.component';
 import { SeparateurMillerPipe } from './separateur-miller.pipe';
 import { HistoriqueReparationComponent } from './client/historique-reparation/historique-reparation.component';
+
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr, 'fr');
+
 
 @NgModule({
   declarations: [
@@ -57,7 +62,7 @@ import { HistoriqueReparationComponent } from './client/historique-reparation/hi
     MatSortModule,
     MatTableModule
   ],
-  providers: [SafePipe, FileUploadService, LiveAnnouncer],
+  providers: [SafePipe, FileUploadService, LiveAnnouncer, { provide: LOCALE_ID, useValue: "fr-FR" }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
