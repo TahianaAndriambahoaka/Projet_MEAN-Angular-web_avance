@@ -1,32 +1,32 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span style="font-size: large;">Bienvenue cher responsable d'atelier</span>
+  <span class="example-spacer"></span>
+  <button mat-button class="example-icon" [routerLink]="['/']" style="font-size: large;">
+    Se déconnecter
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
 <mat-drawer-container class="example-container" autosize style="z-index: 0;">
   <mat-drawer #drawer mode="side">
-      <button mat-button class="hover" style="font-size: large; width: 100%; height: 3em;">
+      <button id="listevoituresareceptionner" mat-button class="hover" [routerLink]="['reception']" style="margin-top: 5px; font-size: large; width: 100%; height: 3em;">
         Liste des voitures à réceptionner
         <mat-icon>list</mat-icon>
       </button>
     <br>
-      <button mat-button class="hover" style="margin-top: 5px; font-size: large; width: 100%; height: 3em;">
+      <button id="listevoituresgarage" mat-button class="hover" [routerLink]="['voitures']" style="margin-top: 5px; font-size: large; width: 100%; height: 3em;">
         Liste des voitures dans le garage
         <mat-icon>list</mat-icon>
       </button>
   </mat-drawer>
 
   <div class="example-sidenav-content">
-    <mat-toolbar color="primary">
-      <button mat-icon-button class="example-icon" (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span style="font-size: large;">Bienvenue cher responsable d'atelier</span>
-      <span class="example-spacer"></span>
-      <button mat-button class="example-icon" [routerLink]="['/']" style="font-size: large;">
-        Se déconnecter
-        <mat-icon>logout</mat-icon>
-      </button>
-    </mat-toolbar>
   </div>
 
   <div style="padding-left: 5%; padding-right: 5%; padding-top: 20px; padding-bottom: 100px; background-color: rgb(216, 228, 228); min-height: 75vh;">
-    <p>hello there</p>
+    <router-outlet></router-outlet>
   </div>
-  <footer></footer>
 </mat-drawer-container>
+<footer></footer>
