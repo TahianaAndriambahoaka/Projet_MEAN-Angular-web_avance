@@ -52,17 +52,7 @@ export class FactureEtatPaiementComponent implements AfterViewInit, OnInit {
   }
 
   @ViewChild('factureetatpaiement') inputElement!: ElementRef;
-  @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.inputElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
-    this.dataSource.sort = this.sort;
-  }
-
-  announceSortChange(sortState: Sort | any) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
   }
 }
