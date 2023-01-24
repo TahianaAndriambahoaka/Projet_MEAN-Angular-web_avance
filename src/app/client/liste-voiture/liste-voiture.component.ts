@@ -117,4 +117,8 @@ export class ListeVoitureComponent implements AfterViewInit, OnInit {
     this.dataSource = new MatTableDataSource(tab);
     this.dataSource.sort = this.sort;
   }
+
+  recuperer(numero: string) {
+    console.log(numero);
+  }
 }
