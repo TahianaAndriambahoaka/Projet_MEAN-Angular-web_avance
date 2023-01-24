@@ -35,6 +35,8 @@ registerLocaleData(localeFr, 'fr');
 
 import { ReceptionVoitureComponent } from './responsableAtelier/reception-voiture/reception-voiture.component';
 import { AccueilComponent } from './responsableAtelier/accueil/accueil.component';
+import { VoitureGarageComponent } from './responsableAtelier/voiture-garage/voiture-garage.component';
+import { ListerReparationComponent } from './responsableAtelier/lister-reparation/lister-reparation.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { AccueilComponent } from './responsableAtelier/accueil/accueil.component
     SeparateurMillerPipe,
     HistoriqueReparationComponent,
     ReceptionVoitureComponent,
-    AccueilComponent
+    AccueilComponent,
+    VoitureGarageComponent,
+    ListerReparationComponent
   ],
   imports: [
     BrowserModule,
