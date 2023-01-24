@@ -1,5 +1,6 @@
-import { AccueilComponent } from './responsableAtelier/accueil/accueil.component';
+import { VoitureGarageComponent } from './responsableAtelier/voiture-garage/voiture-garage.component';
 import { ReceptionVoitureComponent } from './responsableAtelier/reception-voiture/reception-voiture.component';
+import { AccueilComponent } from './responsableAtelier/accueil/accueil.component';
 import { ListeVoitureComponent } from './client/liste-voiture/liste-voiture.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -21,7 +22,15 @@ const routes: Routes = [
       { path: 'historique-reparation/:numero', component: HistoriqueReparationComponent },
     ]
   },
-  { path: "responsable-atelier", component: AccueilComponent }
+  {
+    path: "responsable-atelier",
+    component: AccueilComponent,
+    children: [
+      { path: '', component: ReceptionVoitureComponent },
+      { path: 'reception', component: ReceptionVoitureComponent },
+      { path: 'voitures', component: VoitureGarageComponent },
+    ]
+  }
 ];
 
 @NgModule({
