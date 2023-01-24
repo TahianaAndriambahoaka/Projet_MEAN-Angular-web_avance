@@ -1,0 +1,96 @@
+<div style="background-color: rgb(255, 255, 255);">
+  <h1 mat-dialog-title style="font-weight: bold; font-size: large;">Ici, vous pouvez lister les réparations sur cette voiture</h1>
+  <mat-dialog-content class="mat-typography">
+    <form [formGroup]="form1" (submit)="ajoutReparation()">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-form-field>
+          <textarea rows="1" matInput placeholder="Réparation" [(ngModel)]="reparation" formControlName="reparation"></textarea>
+          <mat-error *ngIf="form1Submitted && errorControlReparation['reparation'].errors && errorControlReparation['reparation'].errors!['required']">Veuillez remplir ce champ</mat-error>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput type="number" placeholder="Prix" [(ngModel)]="prixReparation" formControlName="prixReparation">
+          <mat-error *ngIf="form1Submitted && errorControlReparation['prixReparation'].errors && errorControlReparation['prixReparation'].errors!['required']">Veuillez remplir ce champ</mat-error>
+        </mat-form-field>
+        <button mat-raised-button type="submit" style="margin-left: 10px; height: 55px; margin-top: 4px;">Ajouter</button>
+      </div>
+    </form>
+
+    <form [formGroup]="form2" (submit)="ajoutAchatPiece()">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-form-field>
+          <input matInput placeholder="Pièces" [(ngModel)]="piece" formControlName="piece">
+          <mat-error *ngIf="form2Submitted && errorControlAchatPiece['piece'].errors && errorControlAchatPiece['piece'].errors!['required']">Veuillez remplir ce champ</mat-error>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput type="number" placeholder="Quantité" [(ngModel)]="quantite" formControlName="quantite">
+          <mat-error *ngIf="form2Submitted && errorControlAchatPiece['quantite'].errors && errorControlAchatPiece['quantite'].errors!['required']">Veuillez remplir ce champ</mat-error>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput type="number" placeholder="Prix unitaire" [(ngModel)]="prixPiece" formControlName="prixPiece">
+          <mat-error *ngIf="form2Submitted && errorControlAchatPiece['prixPiece'].errors && errorControlAchatPiece['prixPiece'].errors!['required']">Veuillez remplir ce champ</mat-error>
+        </mat-form-field>
+        <button mat-raised-button type="submit" style="margin-left: 10px; height: 55px; margin-top: 4px;">Ajouter</button>
+      </div>
+    </form>
+
+    <table mat-table [dataSource]="dataSourceReparation" class="mat-elevation-z8" style="width: 100%;" *ngIf="dataSourceReparation.data.length > 0">
+      <ng-container matColumnDef="reparation">
+        <th mat-header-cell *matHeaderCellDef>
+          Réparation
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.reparation}} </td>
+      </ng-container>
+      <ng-container matColumnDef="prix">
+        <th mat-header-cell *matHeaderCellDef style="text-align: right;">
+          Prix
+        </th>
+        <td mat-cell *matCellDef="let element" style="text-align: right;"> {{element.prix | separateurMiller}} Ariary</td>
+      </ng-container>
+      <ng-container matColumnDef="supprimer">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element; let i = index" (click)="supprimerReparation(i)" style="text-align: center;">
+          <button mat-button class="hover" style="margin-left: 10px; background: linear-gradient(to left, rgb(255, 0, 0), rgb(163, 0, 0)); border-radius: 20px; color: white; height: 2em;">
+            Supprimer
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="colonneReparation"></tr>
+      <tr mat-row *matRowDef="let row; columns: colonneReparation;"></tr>
+    </table>
+    <br>
+    <table mat-table [dataSource]="dataSourceAchatPiece" class="mat-elevation-z8" style="width: 100%;" *ngIf="dataSourceAchatPiece.data.length > 0">
+      <ng-container matColumnDef="piece">
+        <th mat-header-cell *matHeaderCellDef>
+          Pièce
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.piece}} </td>
+      </ng-container>
+      <ng-container matColumnDef="quantite">
+        <th mat-header-cell *matHeaderCellDef style="text-align: right;">
+          Quantité
+        </th>
+        <td mat-cell *matCellDef="let element" style="text-align: right;"> {{element.quantite | separateurMiller}} </td>
+      </ng-container>
+      <ng-container matColumnDef="prix">
+        <th mat-header-cell *matHeaderCellDef style="text-align: right;">
+          Prix unitaire
+        </th>
+        <td mat-cell *matCellDef="let element" style="text-align: right;"> {{element.prix | separateurMiller}} Ariary</td>
+      </ng-container>
+      <ng-container matColumnDef="supprimer">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element; let i = index" (click)="supprimerAchatPiece(i)" style="text-align: center;">
+          <button mat-button class="hover" style="margin-left: 10px; background: linear-gradient(to left, rgb(255, 0, 0), rgb(163, 0, 0)); border-radius: 20px; color: white; height: 2em;">
+            Supprimer
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="colonneAchatPiece"></tr>
+      <tr mat-row *matRowDef="let row; columns: colonneAchatPiece;"></tr>
+    </table>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Annuler</button>
+    <button mat-raised-button color="primary" (click)="submit()">Valider</button>
+  </mat-dialog-actions>
+</div>
