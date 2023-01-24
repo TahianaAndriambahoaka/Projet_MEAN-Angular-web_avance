@@ -67,7 +67,7 @@
         <button *ngIf="element.status == 'Déposée'"  style="background-color: #0101ad; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>{{element.status}}</button>
         <button *ngIf="element.status == 'En cours de réparation'"  style="background-color: #c0a911; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>{{element.status}}</button>
         <button *ngIf="element.status == 'Réparée'"  style="background-color: darkcyan; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>{{element.status}}</button>
-        <button mat-button class="hover" *ngIf="element.status == 'Réparée'" (click)="recuperer(element.numero)" style="margin-left: 10px; background: linear-gradient(to left, #00dbde, #fc00ff);; border-radius: 20px; color: white; height: 2em;">
+        <button mat-button class="hover" *ngIf="element.status == 'Réparée'" (click)="recuperer(element.numero)" style="margin-left: 10px; background: linear-gradient(to left, #00dbde, #fc00ff); border-radius: 20px; color: white; height: 2em;">
           Récupérer
         </button>
       </td>
