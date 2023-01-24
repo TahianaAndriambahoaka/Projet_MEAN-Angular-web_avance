@@ -13,6 +13,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -28,7 +29,8 @@ const MaterialComponents = [
   NgxMaterialTimepickerModule,
   MatAutocompleteModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule,
+  ReactiveFormsModule
 ];
 
 @NgModule({
