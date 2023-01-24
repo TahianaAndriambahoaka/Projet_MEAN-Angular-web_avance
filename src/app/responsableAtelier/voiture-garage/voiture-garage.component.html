@@ -1,0 +1,37 @@
+<h1>Liste des voitures dans le garage</h1>
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8" style="width: 100%;">
+
+  <ng-container matColumnDef="numero">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+      Numéro
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.numero}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="marque">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+      Marque
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.marque}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="avancement_reparation">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element"> <button mat-raised-button>État d'avancement des réparations</button> </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="facture">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button>Voir la facture</button>
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
