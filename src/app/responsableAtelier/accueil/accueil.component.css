@@ -1,0 +1,21 @@
+.example-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.example-sidenav-content {
+  /* display: flex; */
+  height: 100%;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.hover:hover {
+  background-color: rgb(72, 72, 180);
+  color: white;
+  box-shadow: 5px 5px 10px #888888;
+}

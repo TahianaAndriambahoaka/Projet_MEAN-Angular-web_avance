@@ -11,6 +11,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -24,7 +26,9 @@ const MaterialComponents = [
   MatDatepickerModule,
   MatNativeDateModule,
   NgxMaterialTimepickerModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatSidenavModule,
+  MatListModule
 ];
 
 @NgModule({

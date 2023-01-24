@@ -33,6 +33,8 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
 
+import { ReceptionVoitureComponent } from './responsableAtelier/reception-voiture/reception-voiture.component';
+import { AccueilComponent } from './responsableAtelier/accueil/accueil.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ registerLocaleData(localeFr, 'fr');
     FooterComponent,
     FactureEtatPaiementComponent,
     SeparateurMillerPipe,
-    HistoriqueReparationComponent
+    HistoriqueReparationComponent,
+    ReceptionVoitureComponent,
+    AccueilComponent
   ],
   imports: [
     BrowserModule,

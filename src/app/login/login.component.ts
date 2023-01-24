@@ -37,7 +37,8 @@ export class LoginComponent {
         x!.className = "show";
         setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
       } else {
-        this.router.navigate(['/client']);
+        // this.router.navigate(['/client']);
+        this.router.navigate(['/responsable-atelier']);
       }
     }
   }

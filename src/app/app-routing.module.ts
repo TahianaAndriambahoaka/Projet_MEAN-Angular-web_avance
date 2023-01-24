@@ -1,3 +1,5 @@
+import { AccueilComponent } from './responsableAtelier/accueil/accueil.component';
+import { ReceptionVoitureComponent } from './responsableAtelier/reception-voiture/reception-voiture.component';
 import { ListeVoitureComponent } from './client/liste-voiture/liste-voiture.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -18,7 +20,8 @@ const routes: Routes = [
       { path: 'facture-etat-paiement/:numero', component: FactureEtatPaiementComponent },
       { path: 'historique-reparation/:numero', component: HistoriqueReparationComponent },
     ]
-  }
+  },
+  { path: "responsable-atelier", component: AccueilComponent }
 ];
 
 @NgModule({
