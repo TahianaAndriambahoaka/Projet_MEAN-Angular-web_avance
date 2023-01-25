@@ -45,6 +45,7 @@ import { ValidationPaiementComponent } from './responsableFinancier/validation-p
 import { StatistiqueComponent } from './responsableFinancier/statistique/statistique.component';
 
 import { VoirFactureComponent as VoirFactureResponsableFinancierComponent } from './responsableFinancier/voir-facture/voir-facture.component';
+import { MediaQueryService } from './media-query-service.service';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,7 @@ import { VoirFactureComponent as VoirFactureResponsableFinancierComponent } from
     BrowserAnimationsModule,
     NoopAnimationsModule
   ],
-  providers: [SafePipe, FileUploadService, LiveAnnouncer, { provide: LOCALE_ID, useValue: "fr-FR" }],
+  providers: [SafePipe, FileUploadService, LiveAnnouncer, { provide: LOCALE_ID, useValue: "fr-FR" }, MediaQueryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
