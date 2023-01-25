@@ -1,3 +1,5 @@
+import { VoirFactureComponent } from './../voir-facture/voir-facture.component';
+import { ChangerReparationAvancementComponent } from './../changer-reparation-avancement/changer-reparation-avancement.component';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -45,4 +47,19 @@ export class VoitureGarageComponent {
     }
   }
 
+  changerReparationAvancement(numero: string) {
+    this.dialog.open(ChangerReparationAvancementComponent, {
+      data: {
+        numero: numero
+      }
+    });
+  }
+  
+  voirFacture(numero: string) {
+    this.dialog.open(VoirFactureComponent, {
+      data: {
+        numero: numero
+      }
+    });
+  }
 }
