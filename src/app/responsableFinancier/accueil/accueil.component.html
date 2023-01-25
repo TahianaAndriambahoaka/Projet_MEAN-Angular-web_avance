@@ -1,16 +1,24 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button class="example-icon" (click)="drawer.toggle()">
+<mat-toolbar color="primary" style="display: flex;">
+  <button mat-icon-button (click)="drawer.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span style="font-size: large;">Bienvenue cher responsable financier</span>
-  <span class="example-spacer"></span>
-  <button mat-button class="example-icon" [routerLink]="['/']" style="font-size: large;">
+  
+  <span class="example-spacer">
+    Responsable financier
+  </span>
+
+  <button id="logoutPhone" mat-icon-button [routerLink]="['/']">
+    <mat-icon>logout</mat-icon>
+  </button>
+  <button id="logoutPc" mat-button [routerLink]="['/']" style="font-size: large;">
     Se déconnecter
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
+
+
 <mat-drawer-container class="example-container" autosize style="z-index: 0;">
-  <mat-drawer #drawer mode="side" opened>
+  <mat-drawer #drawer mode="side" [opened]="isBigScreen">
       <button id="validationpaiement" mat-button class="hover" [routerLink]="['validation-de-paiement']" style="margin-top: 5px; font-size: large; width: 100%; height: 3em;">
         Validation de paiements
         <mat-icon>done_outline</mat-icon>
@@ -21,12 +29,12 @@
         <mat-icon>assessment</mat-icon>
       </button>
   </mat-drawer>
-
   <div class="example-sidenav-content">
-  </div>
-
-  <div style="padding-left: 5%; padding-right: 5%; padding-top: 20px; padding-bottom: 100px; background-color: rgb(216, 228, 228); min-height: 75vh;">
-    <router-outlet></router-outlet>
+    <div style="padding-left: 5%; padding-right: 5%; padding-top: 20px; padding-bottom: 100px; background-color: rgb(216, 228, 228); min-height: 75vh;">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </mat-drawer-container>
+
+
 <footer></footer>
