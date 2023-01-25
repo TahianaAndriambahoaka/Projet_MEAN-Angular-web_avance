@@ -13,20 +13,20 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OnInit } from '@angular/core';
 
 const ELEMENT_DATA = [
-  {numero: '1', marque: 'Hydrogen', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '2', marque: 'Helium', status: 'En cours de réparation', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '3', marque: 'Lithium', status: 'Réparée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '4', marque: 'Beryllium', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '5', marque: 'Boron', status: 'En cours de réparation', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '6', marque: 'Carbon', status: 'Réparée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '7', marque: 'Nitrogen', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '8', marque: 'Oxygen', status: 'En cours de réparation', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '9', marque: 'Fluorine', status: 'Réparée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '10', marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '10', marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '10', marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '10', marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
-  {numero: '10', marque: 'Neon', status: 'Déposée', reparation_avancament: '', facture_paiement: '', historique: 'Historique des réparations'},
+  {numero: '1', marque: 'Hydrogen', status: 'Déposée', boutton: ''},
+  {numero: '2', marque: 'Helium', status: 'En cours de réparation', boutton: ''},
+  {numero: '3', marque: 'Lithium', status: 'Réparée', boutton: ''},
+  {numero: '4', marque: 'Beryllium', status: 'Déposée', boutton: ''},
+  {numero: '5', marque: 'Boron', status: 'En cours de réparation', boutton: ''},
+  {numero: '6', marque: 'Carbon', status: 'Réparée', boutton: ''},
+  {numero: '7', marque: 'Nitrogen', status: 'Déposée', boutton: ''},
+  {numero: '8', marque: 'Oxygen', status: 'En cours de réparation', boutton: ''},
+  {numero: '9', marque: 'Fluorine', status: 'Réparée', boutton: ''},
+  {numero: '10', marque: 'Neon', status: 'Déposée', boutton: ''},
+  {numero: '10', marque: 'Neon', status: 'Déposée', boutton: ''},
+  {numero: '10', marque: 'Neon', status: 'Déposée', boutton: ''},
+  {numero: '10', marque: 'Neon', status: 'Déposée', boutton: ''},
+  {numero: '10', marque: 'Neon', status: 'Déposée', boutton: ''},
 ];
 
 @Component({
@@ -36,7 +36,7 @@ const ELEMENT_DATA = [
   entryComponents: [HeaderComponent, FooterComponent, ReparationAvancementComponent]
 })
 export class ListeVoitureComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['numero', 'marque', 'status', 'reparation_avancament', 'facture_paiement', 'historique'];
+  displayedColumns: string[] = ['numero', 'marque', 'status', 'boutton'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   marques: string[] = ['Hydrogen', 'Beryllium', 'Neon'];
   topOfPage: any;

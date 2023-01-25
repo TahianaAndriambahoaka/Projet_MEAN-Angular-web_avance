@@ -1,3 +1,26 @@
-.example-spacer {
-  flex: 1 1 auto;
+/* Pour petit écran */
+@media all and (max-device-width: 599px) {
+  .example-spacer {
+    font-size: large;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
+
+  #logoutPc {
+      display: none;
+  }
+}
+
+/* Pour grand écran */
+@media all and (min-device-width: 600px) {
+  .example-spacer {
+    font-size: large;
+    display: flex;
+    flex: 1;
+  }
+
+  #logoutPhone {
+      display: none;
+  }
 }

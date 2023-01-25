@@ -28,3 +28,60 @@ th.mat-sort-header-sorted {
   background-color: #e0e0e0;
   box-shadow: 0 5px 10px #888888;
 }
+
+/* Pour petit écran */
+@media all and (max-device-width: 999px) {
+  #numeroRecherche {
+    display: block;
+  }
+  #marqueRecherche {
+    display: block;
+  }
+  #bouttonRecherche {
+    display: block;
+  }
+}
+
+/* Pour grand écran */
+@media all and (min-device-width: 1000px) {
+  #numeroRecherche {
+    float: left;
+  }
+  #marqueRecherche {
+    float: left;
+    margin-left: 10px;
+  }
+  #bouttonRecherche {
+    float: left;
+    margin-left: 10px;
+  }
+  #bouttonDepotVoiture {
+    float: right;
+  }
+}
+
+/* Pour petit écran | tableau */
+@media all and (max-device-width: 1024px) {
+  #reparationAvancement {
+    display: none;
+  }
+  #factureEtatPaiement {
+    display: none;
+  }
+  #historiqueReparation {
+    display: none;
+  }
+}
+
+/* Pour grand écran | tableau */
+@media all and (min-device-width: 1025px) {
+  #reparationAvancementIcon {
+    display: none;
+  }
+  #factureEtatPaiementIcon {
+    display: none;
+  }
+  #historiqueReparationIcon {
+    display: none;
+  }
+}

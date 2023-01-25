@@ -3,13 +3,17 @@
   <button mat-icon-button class="example-icon" [routerLink]="['/client']">
     <mat-icon>home</mat-icon>
   </button>
-  <span style="font-size: large;">Bienvenue cher client</span>
 
 
-  <span class="example-spacer"></span>
+  <span class="example-spacer">
+    Client
+  </span>
 
 
-  <button mat-button class="example-icon" [routerLink]="['/']" style="font-size: large;">
+  <button id="logoutPhone" mat-icon-button [routerLink]="['/']">
+    <mat-icon>logout</mat-icon>
+  </button>
+  <button id="logoutPc" mat-button [routerLink]="['/']" style="font-size: large;">
     Se déconnecter
     <mat-icon>logout</mat-icon>
   </button>
