@@ -40,6 +40,12 @@ import { ListerReparationComponent } from './responsableAtelier/lister-reparatio
 import { ChangerReparationAvancementComponent } from './responsableAtelier/changer-reparation-avancement/changer-reparation-avancement.component';
 import { VoirFactureComponent } from './responsableAtelier/voir-facture/voir-facture.component';
 
+import { AccueilComponent as AccueilResponsableFinancierComponent} from './responsableFinancier/accueil/accueil.component';
+import { ValidationPaiementComponent } from './responsableFinancier/validation-paiement/validation-paiement.component';
+import { StatistiqueComponent } from './responsableFinancier/statistique/statistique.component';
+
+import { VoirFactureComponent as VoirFactureResponsableFinancierComponent } from './responsableFinancier/voir-facture/voir-facture.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +66,11 @@ import { VoirFactureComponent } from './responsableAtelier/voir-facture/voir-fac
     VoitureGarageComponent,
     ListerReparationComponent,
     ChangerReparationAvancementComponent,
-    VoirFactureComponent
+    VoirFactureComponent,
+    AccueilResponsableFinancierComponent,
+    ValidationPaiementComponent,
+    StatistiqueComponent,
+    VoirFactureResponsableFinancierComponent
   ],
   imports: [
     BrowserModule,

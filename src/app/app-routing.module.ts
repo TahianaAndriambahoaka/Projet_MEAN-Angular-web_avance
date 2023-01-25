@@ -1,3 +1,5 @@
+import { StatistiqueComponent } from './responsableFinancier/statistique/statistique.component';
+import { ValidationPaiementComponent } from './responsableFinancier/validation-paiement/validation-paiement.component';
 import { VoitureGarageComponent } from './responsableAtelier/voiture-garage/voiture-garage.component';
 import { ReceptionVoitureComponent } from './responsableAtelier/reception-voiture/reception-voiture.component';
 import { AccueilComponent } from './responsableAtelier/accueil/accueil.component';
@@ -9,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { ReparationAvancementComponent } from './client/reparation-avancement/reparation-avancement.component';
 import { FactureEtatPaiementComponent } from './client/facture-etat-paiement/facture-etat-paiement.component';
 import { HistoriqueReparationComponent } from './client/historique-reparation/historique-reparation.component';
+import { AccueilComponent as AccueilResponsableFinancierComponent} from './responsableFinancier/accueil/accueil.component';
 
 const routes: Routes = [
   { path: "", component: LoginComponent },
@@ -29,6 +32,15 @@ const routes: Routes = [
       { path: '', component: ReceptionVoitureComponent },
       { path: 'reception', component: ReceptionVoitureComponent },
       { path: 'voitures', component: VoitureGarageComponent },
+    ]
+  },
+  {
+    path: "responsable-financier",
+    component: AccueilResponsableFinancierComponent,
+    children: [
+      { path: '', component: ValidationPaiementComponent },
+      { path: 'validation-de-paiement', component: ValidationPaiementComponent },
+      { path: 'statistiques', component: StatistiqueComponent },
     ]
   }
 ];
