@@ -37,6 +37,8 @@ import { ReceptionVoitureComponent } from './responsableAtelier/reception-voitur
 import { AccueilComponent } from './responsableAtelier/accueil/accueil.component';
 import { VoitureGarageComponent } from './responsableAtelier/voiture-garage/voiture-garage.component';
 import { ListerReparationComponent } from './responsableAtelier/lister-reparation/lister-reparation.component';
+import { ChangerReparationAvancementComponent } from './responsableAtelier/changer-reparation-avancement/changer-reparation-avancement.component';
+import { VoirFactureComponent } from './responsableAtelier/voir-facture/voir-facture.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { ListerReparationComponent } from './responsableAtelier/lister-reparatio
     ReceptionVoitureComponent,
     AccueilComponent,
     VoitureGarageComponent,
-    ListerReparationComponent
+    ListerReparationComponent,
+    ChangerReparationAvancementComponent,
+    VoirFactureComponent
   ],
   imports: [
     BrowserModule,
