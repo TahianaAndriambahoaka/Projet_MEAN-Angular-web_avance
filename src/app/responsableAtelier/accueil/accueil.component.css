@@ -1,21 +1,41 @@
 .example-container {
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
 }
 
 .example-sidenav-content {
-  /* display: flex; */
-  height: 100%;
-  /* align-items: center; */
-  /* justify-content: center; */
-}
-
-.example-spacer {
-  flex: 1 1 auto;
+  height: 100vh;
 }
 
 .hover:hover {
   background-color: #3f51b5;
   color: white;
   box-shadow: 5px 5px 10px #888888;
+}
+
+/* Pour petit écran */
+@media all and (max-device-width: 599px) {
+  .example-spacer {
+    font-size: large;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
+
+  #logoutPc {
+      display: none;
+  }
+}
+
+/* Pour grand écran */
+@media all and (min-device-width: 600px) {
+  .example-spacer {
+    font-size: large;
+    display: flex;
+    flex: 1;
+  }
+
+  #logoutPhone {
+      display: none;
+  }
 }

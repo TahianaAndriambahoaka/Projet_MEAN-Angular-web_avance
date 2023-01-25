@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { FooterComponent } from 'src/app/footer/footer.component';
+import { MediaQueryService } from 'src/app/media-query-service.service';
 
 @Component({
   selector: 'app-accueil',
@@ -8,8 +9,10 @@ import { FooterComponent } from 'src/app/footer/footer.component';
   styleUrls: ['./accueil.component.css'],
   entryComponents: [FooterComponent]
 })
-export class AccueilComponent {
-  constructor(private router: Router) {
+export class AccueilComponent implements OnInit {
+  isBigScreen: boolean = false;
+
+  constructor(private router: Router, private mediaQueryService: MediaQueryService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let url = event.url;
@@ -22,5 +25,11 @@ export class AccueilComponent {
         }
       }
     });
-}
+  }
+
+  ngOnInit() {
+    this.mediaQueryService.getMediaQuery().subscribe(isBigScreen => {
+      this.isBigScreen = isBigScreen;
+    });
+  }
 }
