@@ -1,3 +1,4 @@
+import { data } from 'jquery';
 import { SafePipe } from '../safe.pipe';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -80,6 +81,10 @@ export class InscriptionComponent implements OnInit {
       this.mail = this.form.get('mail')?.value;
       this.mdp1 = this.form.get('mdp1')?.value;
       this.mdp2 = this.form.get('mdp2')?.value;
+      console.log(this.nom);
+      console.log(this.prenom);
+      console.log(this.mail);
+      console.log(this.mdp1);
 
       if(this.pdp) {
         this.count = 1;
@@ -133,23 +138,35 @@ export class InscriptionComponent implements OnInit {
         }
       })
       .then(res => {
-        console.log(res.json());
-        this.isSubmitted = false;
-        this.form.reset();
-        $('#boutton').html("S'inscrire");
-        var x = document.getElementById("success");
-        x!.className = "show";
-        setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
-      })
-      .then(data => {
-        this.isSubmitted = false;
-        this.form.reset();
-        $('#boutton').html("S'inscrire");
-        var x = document.getElementById("success");
-        x!.className = "show";
-        setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
+        const code = res.status;
+        if(code == 201) {
+          this.isSubmitted = false;
+          this.form.reset();
+          $('#boutton').html("S'inscrire");
+          var x = document.getElementById("success");
+          x!.className = "show";
+          setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
+        } else {
+          $('#boutton').html("S'inscrire");
+          res.json().then(data => {
+            const message = data.message;
+            if (typeof message == 'string') {
+              var x = document.getElementById("error");
+              x!.innerHTML = message;
+              x!.className = "show";
+              setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
+            } else {
+              $('#boutton').html("S'inscrire");
+              var x = document.getElementById("error");
+              x!.innerHTML = "Une erreur s'est produite! Veuillez réessayer!";
+              x!.className = "show";
+              setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
+            }
+          });
+        }
       })
       .catch(err => {
+        console.error('err');
         console.error(err);
         $('#boutton').html("S'inscrire");
         var x = document.getElementById("error");

@@ -51,7 +51,7 @@
               <div class="wrap-input100 validate-input mt-4">
                   <span class="label-input100">Mot de passe</span>
                   <input class="input100" type="password" name="mdp1" formControlName="mdp1" placeholder="Entrez votre mot de passe" required>
-                  <span class="focus-input100" data-symbol="&#xf15a;"></span>
+                  <span class="focus-input100" data-symbol="&#xf190;"></span>
               </div>
               <span style="color: red; display: block;" *ngIf="isSubmitted && errorControl['mdp1'].errors && errorControl['mdp1'].errors!['required']">
                 *Veuillez remplir ce champ.
@@ -63,7 +63,7 @@
               <div class="wrap-input100 validate-input mt-4">
                   <span class="label-input100">Confirmez votre mot de passe</span>
                   <input class="input100" type="password" name="mdp2" formControlName="mdp2" placeholder="Confirmez votre mot de passe" required>
-                  <span class="focus-input100" data-symbol="&#xf15a;"></span>
+                  <span class="focus-input100" data-symbol="&#xf190;"></span>
               </div>
               <span style="color: red; display: block;" *ngIf="isSubmitted && errorControl['mdp2'].errors && errorControl['mdp2'].errors!['required']">
                 *Veuillez remplir ce champ.
@@ -84,7 +84,7 @@
                   </div>
               </div>
 
-              <div id="success">Vérifier votre boite de récetion pour valider votre inscription!</div>
+              <div id="success">Vous allez recevoir un email de vérification pour confirmer votre inscription.</div>
               <div id="error">Une erreur s'est produite! Veuillez réessayer!</div>
 
               <div class="flex-col-c p-t-50">
