@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileUploadService } from '../file-upload.service';
 import { FileUpload } from '../file-upload.model';
 import { AngularFireList } from '@angular/fire/compat/database';
-import { finalize, map } from 'rxjs/operators';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-inscription',
@@ -24,14 +25,24 @@ export class InscriptionComponent implements OnInit {
   nom: string = "";
   prenom: string = "";
   mail: string = "";
+  mdp1: string = "";
+  mdp2: string = "";
   count: number = 0;
 
   constructor(private safe: SafePipe, private fb: FormBuilder, private uploadService: FileUploadService) {
     this.form = this.fb.group({
       nom: ['', [Validators.required]],
       prenom: ['', [Validators.required]],
-      mail: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]]
+      mail: ['', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
+      mdp1: ['', [Validators.required, Validators.minLength(8)]],
+      mdp2: ['', [Validators.required]]
     });
+  }
+
+  passwordMatchValidator() {
+    const password = this.form.get('mdp1')?.value;
+    const confirmPassword = this.form.get('mdp2')?.value;
+    return password === confirmPassword ? true : false;
   }
 
   ngOnInit(): void {}
@@ -62,18 +73,20 @@ export class InscriptionComponent implements OnInit {
 
   submit() {
     this.isSubmitted = true;
-    if (this.form.valid) {
+    if (this.form.valid && this.passwordMatchValidator()) {
       $('#boutton').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>&nbsp;Chargement...');
       this.nom = this.form.get('nom')?.value;
       this.prenom = this.form.get('prenom')?.value;
       this.mail = this.form.get('mail')?.value;
+      this.mdp1 = this.form.get('mdp1')?.value;
+      this.mdp2 = this.form.get('mdp2')?.value;
 
       if(this.pdp) {
         this.count = 1;
         // upload
         this.uploadService.pushFileToStorage(this.pdp).subscribe(
           percentage => {
-            this.percentage = Math.round(percentage ? percentage : 0);
+            this.percentage = percentage;
             this.uploadService.uploadTask.snapshotChanges().pipe(
               finalize(() => {
                 this.uploadService.storageRef.getDownloadURL().subscribe((downloadURL: any) => {
@@ -101,28 +114,48 @@ export class InscriptionComponent implements OnInit {
 
   ws(downloadURL: string) {
     if (this.count == 1) {
-      console.log(this.nom);
-      console.log(this.prenom);
-      console.log(this.mail);
-      console.log(downloadURL);
       this.pdp = null;
       this.pdpURL = this.defaultPdpURL;
       this.percentage = 0;
 
-      // erreur
-      if (!true) {
-        $('#boutton').html("S'inscrire");
-        var x = document.getElementById("error");
-        x!.className = "show";
-        setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
-      } else { // success
+      fetch('https://garage-backend-sigma.vercel.app/users/register', {
+        method: 'POST',
+        body: JSON.stringify({
+          nom: this.nom,
+          prenom: this.prenom,
+          email: this.mail,
+          password: this.mdp1,
+          passwordConf: this.mdp2,
+          profil: downloadURL
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => {
+        console.log(res.json());
         this.isSubmitted = false;
         this.form.reset();
         $('#boutton').html("S'inscrire");
         var x = document.getElementById("success");
         x!.className = "show";
         setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
-      }
+      })
+      .then(data => {
+        this.isSubmitted = false;
+        this.form.reset();
+        $('#boutton').html("S'inscrire");
+        var x = document.getElementById("success");
+        x!.className = "show";
+        setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
+      })
+      .catch(err => {
+        console.error(err);
+        $('#boutton').html("S'inscrire");
+        var x = document.getElementById("error");
+        x!.className = "show";
+        setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
+      });
     }
   }
 
