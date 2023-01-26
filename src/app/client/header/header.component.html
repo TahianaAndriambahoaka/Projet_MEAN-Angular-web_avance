@@ -10,10 +10,10 @@
   </span>
 
 
-  <button id="logoutPhone" mat-icon-button [routerLink]="['/']">
+  <button id="logoutPhone" mat-icon-button (click)="logout()">
     <mat-icon>logout</mat-icon>
   </button>
-  <button id="logoutPc" mat-button [routerLink]="['/']" style="font-size: large;">
+  <button id="logoutPc" mat-button (click)="logout()" style="font-size: large;">
     Se déconnecter
     <mat-icon>logout</mat-icon>
   </button>

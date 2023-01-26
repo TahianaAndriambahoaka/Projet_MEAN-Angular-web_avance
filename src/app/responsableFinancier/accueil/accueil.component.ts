@@ -30,4 +30,9 @@ export class AccueilComponent implements OnInit {
       this.isBigScreen = isBigScreen;
     });
   }
+  
+  logout() {
+    sessionStorage.removeItem('token-responsable_financier');
+    this.router.navigate(['/']);
+  }
 }
