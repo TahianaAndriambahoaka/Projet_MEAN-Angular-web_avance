@@ -23,13 +23,13 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <mat-form-field class="example-form-field" appearance="fill" style="margin-left: 10px;">
+      <!-- <mat-form-field class="example-form-field" appearance="fill" style="margin-left: 10px;">
         <mat-label style="color: black;">Date</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="date" (dateChange)="onDateChange($event)">
         <mat-error *ngIf="isSubmitted && errorControl['date'].errors && errorControl['date'].errors!['required']">Veuillez remplir ce champ</mat-error>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+      </mat-form-field> -->
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-raised-button mat-dialog-close>Annuler</button>

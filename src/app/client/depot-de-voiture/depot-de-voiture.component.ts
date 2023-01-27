@@ -13,7 +13,7 @@ export class DepotDeVoitureComponent implements OnInit {
   isSubmitted = false;
   numero!: string | null;
   marque!: string | null;
-  date!: Date;
+  // date!: Date;
   formControl = new FormControl('');
   filteredOptions!: Observable<string[]>;
   marques: string[] = ['Hydrogen', 'Beryllium', 'Neon'];
@@ -21,8 +21,8 @@ export class DepotDeVoitureComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       numero: ['', [Validators.required]],
-      marque: ['', [Validators.required]],
-      date: ['', [Validators.required]]
+      marque: ['', [Validators.required]]/*,
+      date: ['', [Validators.required]]*/
     });
   }
 
@@ -33,9 +33,9 @@ export class DepotDeVoitureComponent implements OnInit {
     );
   }
 
-  onDateChange(event: MatDatepickerInputEvent<Date> | any) {
-    this.date = event.value;
-  }
+  // onDateChange(event: MatDatepickerInputEvent<Date> | any) {
+  //   this.date = event.value;
+  // }
 
 
   submit() {
@@ -43,7 +43,31 @@ export class DepotDeVoitureComponent implements OnInit {
     if (this.form.valid) {
       console.log(this.numero);
       console.log(this.marque);
-      console.log(this.date);
+      // console.log(this.date);
+      fetch('https://garage-backend-sigma.vercel.app/voiture/depot', {
+        method: 'POST',
+        body: JSON.stringify({
+          marque: this.marque,
+          numero: this.numero
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': sessionStorage.getItem('token-client')!
+        }
+      })
+      .then(response => {
+        const code = response.status;
+        if(code == 201) {
+          this.form.reset();
+          console.log(response.json());
+        } else {
+          console.error("Une erreur s'est produite");
+        }
+        this.isSubmitted = false;
+      })
+      .catch(error => {
+        console.error(error)
+      })
     }
   }
 
