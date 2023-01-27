@@ -33,8 +33,11 @@
                 <div class="container-login100-form-btn p-t-8 p-b-31">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <button id="loginButton" class="login100-form-btn">
-                          Se connecter
+                        <button *ngIf="loading" class="login100-form-btn" disabled>
+                          <span class="spinner-loader"></span>
+                        </button>
+                        <button *ngIf="!loading" class="login100-form-btn">
+                            Se connecter
                         </button>
                     </div>
                 </div>

@@ -9,6 +9,7 @@ import * as $ from 'jquery'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  loading:boolean = false;
   public form!: FormGroup;
   isSubmitted = false;
   login: string = "";
@@ -16,7 +17,7 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, private router:Router) {
     this.form = this.fb.group({
-      login: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      login: ['', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
       mdp: ['', [Validators.required]],
     });
   }
@@ -24,7 +25,7 @@ export class LoginComponent {
   submit() {
     this.isSubmitted = true;
     if (this.form.valid) {
-      $('#loginButton').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>&nbsp;Chargement...');
+      this.loading = true;
       this.login=this.form.get('login')?.value;
       this.mdp=this.form.get('mdp')?.value;
 
@@ -40,6 +41,7 @@ export class LoginComponent {
         }
       })
       .then(res => {
+        this.loading = false;
         const code = res.status;
         if(code == 200) {
           // ok
@@ -64,10 +66,9 @@ export class LoginComponent {
             }
             
           });
-        } else if(code == 401) { // erreur d'authentifiation          
+        } else if(code == 401) { // erreur d'authentifiation
           res.json().then(data => {
             const message = data.message;
-            $('#loginButton').html('Se connecter');
             var x = document.getElementById("snackbar");
             x!.innerHTML = message;
             x!.className = "show";
@@ -76,21 +77,10 @@ export class LoginComponent {
         }
       })
       .catch(err => {
+        this.loading = false;
         console.error('err');
         console.error(err);
       });
-
-      // // erreur d'authentification
-      // if (!true) {
-      //   $('#loginButton').html('Se connecter');
-      //   var x = document.getElementById("snackbar");
-      //   x!.className = "show";
-      //   setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
-      // } else {
-      //   // this.router.navigate(['/client']);
-      //   // this.router.navigate(['/responsable-atelier/reception']);
-      //   this.router.navigate(['/responsable-financier']);
-      // }
     }
   }
 
