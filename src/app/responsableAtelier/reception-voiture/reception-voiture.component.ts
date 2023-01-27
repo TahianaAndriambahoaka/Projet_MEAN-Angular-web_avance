@@ -4,6 +4,7 @@ import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { LoadingComponent } from 'src/app/loading/loading.component';
 
 interface Voiture {
   numero: string,
@@ -14,9 +15,11 @@ interface Voiture {
 @Component({
   selector: 'app-reception-voiture',
   templateUrl: './reception-voiture.component.html',
-  styleUrls: ['./reception-voiture.component.css']
+  styleUrls: ['./reception-voiture.component.css'],
+  entryComponents: [LoadingComponent]
 })
 export class ReceptionVoitureComponent implements AfterViewInit, OnInit {
+  isLoading = true;
   displayedColumns: string[] = ['numero', 'marque', 'dateDepot', 'reception'];
   liste_voiture!: Voiture[];
   dataSource!: MatTableDataSource<Voiture>;
@@ -31,6 +34,7 @@ export class ReceptionVoitureComponent implements AfterViewInit, OnInit {
   }
 
   getData() {
+    this.isLoading = true;
     this.liste_voiture = [];
     fetch('https://garage-backend-sigma.vercel.app/voiture/non-receptionees', {
       method: 'GET',
@@ -40,6 +44,7 @@ export class ReceptionVoitureComponent implements AfterViewInit, OnInit {
       }
     })
     .then(response => {
+      this.isLoading = false;
       const rep = response.json();
       const code = response.status;
       if(code == 200) {
@@ -62,7 +67,8 @@ export class ReceptionVoitureComponent implements AfterViewInit, OnInit {
       }
     })
     .catch(error => {
-      console.error(error)
+      this.isLoading = false;
+      console.error(error);
     })
   }
 
