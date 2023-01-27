@@ -34,7 +34,8 @@ const MaterialComponents = [
   MatListModule,
   ReactiveFormsModule,
   MatProgressBarModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatListModule
 ];
 
 @NgModule({

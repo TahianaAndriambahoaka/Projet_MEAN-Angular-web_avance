@@ -3,8 +3,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
-var LISTE_REPARATION: any[] = [];
-var LISTE_ACHAT_PIECE: any[] = [];
+interface AchatPiece {
+  nom: string,
+  pu: number,
+  quantite: number
+}
+
+interface Reparation {
+  achat_piece: AchatPiece[],
+  frais: number,
+  debut_reparation: Date,
+  fin_reparation: Date | null,
+  description: string
+}
 
 @Component({
   selector: 'app-lister-reparation',
@@ -25,11 +36,8 @@ export class ListerReparationComponent {
   quantite!: number | null;
   prixPiece!: number | null;
 
-  colonneReparation: string[] = ['reparation', 'prix', 'supprimer'];
-  dataSourceReparation = new MatTableDataSource(LISTE_REPARATION);
-
-  colonneAchatPiece: string[] = ['piece', 'quantite', 'prix', 'supprimer'];
-  dataSourceAchatPiece = new MatTableDataSource(LISTE_ACHAT_PIECE);
+  liste_reparation: Reparation[] = [];
+  tempId!:number;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder) {
     this.numero = data.numero;
@@ -55,49 +63,53 @@ export class ListerReparationComponent {
   ajoutReparation() {
     this.form1Submitted = true;
     if (this.form1.valid) {
-      LISTE_REPARATION.push({
-        reparation: this.reparation,
-        prix: this.prixReparation,
-        supprimer: ''
-      });
-      this.reparation = null;
-      this.prixReparation = null;
-      this.dataSourceReparation = new MatTableDataSource(LISTE_REPARATION);
+      const rep: Reparation = {
+        achat_piece: [],
+        frais: this.prixReparation!,
+        debut_reparation: new Date(),
+        fin_reparation: null,
+        description: this.reparation!
+      };
+      this.liste_reparation.push(rep);
+      this.form1.reset();
       this.form1Submitted = false;
     }
   }
 
-  supprimerReparation(index: number) {
-    LISTE_REPARATION.splice(index, 1);
-    this.dataSourceReparation = new MatTableDataSource(LISTE_REPARATION);
+  supprimerReparation(id:number) {
+    this.liste_reparation.splice(id, 1);
   }
+
+  clickBouttonAjoutAchatPiece(indice: number) {
+    this.tempId = indice;
+    document.getElementById('form2')?.setAttribute('style', '');
+  }
+
+  // supprimerReparation(index: number) {
+  //   LISTE_REPARATION.splice(index, 1);
+  //   this.dataSourceReparation = new MatTableDataSource(LISTE_REPARATION);
+  // }
 
   ajoutAchatPiece() {
     this.form2Submitted = true;
     if (this.form2.valid) {
-      LISTE_ACHAT_PIECE.push({
-        piece: this.piece,
-        quantite: this.quantite,
-        prix: this.prixPiece,
-        supprimer: ''
-      });
-      this.piece = null;
-      this.quantite = null;
-      this.prixPiece = null;
-      this.dataSourceAchatPiece = new MatTableDataSource(LISTE_ACHAT_PIECE);
+      const ap: AchatPiece = {
+        nom: this.piece!,
+        pu: this.prixPiece!,
+        quantite: this.quantite!
+      }
+      this.liste_reparation[this.tempId].achat_piece.push(ap);
+      this.form2.reset();
       this.form2Submitted = false;
+      document.getElementById('form2')?.setAttribute('style', 'display: none');
     }
   }
 
-  supprimerAchatPiece(index: number) {
-    LISTE_ACHAT_PIECE.splice(index, 1);
-    this.dataSourceAchatPiece = new MatTableDataSource(LISTE_ACHAT_PIECE);
+  supprimerAchatPiece(idRep:number, id: number) {
+    this.liste_reparation[idRep].achat_piece.splice(id, 1);
   }
 
   submit() {
-    console.log(LISTE_ACHAT_PIECE);
-    console.log(LISTE_REPARATION);
-    LISTE_ACHAT_PIECE = [];
-    LISTE_REPARATION = [];
+    console.log(JSON.stringify(this.liste_reparation));
   }
 }
