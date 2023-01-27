@@ -1,97 +1,35 @@
-*, ::before, ::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
+.loader{
+  position: fixed;
   height: 100vh;
-}
-
-.accueil {
-  height: 100%;
   width: 100%;
-  background: url(https://images.unsplash.com/photo-1511576661531-b34d7da5d0bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  background: #fff;
+  transition: all 0.5s;
 }
-
-.accueil h1 {
-  font-size: 120px;
-  margin-bottom: 450px;
-  text-align: center;
+.loader .ring{
+  height: 45px;
+  width: 45px;
+  border: 5px solid #ddd;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-/* loader */
-
-.loader {
+.loader .ring:after{
   position: absolute;
-  width: 100%;
+  content: "";
   height: 100%;
-  background: #000;
-  display: flex; 
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  border-radius: 50%;
+  border: 5px solid #ff3d00;
+  border-top-color: transparent;
+  animation: rotate 1.5s linear infinite;
 }
-.lettre {
-  color: #484848;
-  font-size: 80px;
-  letter-spacing: 15px;
-  margin-bottom: 150px;
-  animation: flash 1.2s linear infinite;
-}
-@keyframes flash {
-  0% {
-      color: #fff900;
-      text-shadow: 0 0 7px #fff900;
+@keyframes rotate {
+  100%{
+    transform: rotate(360deg);
   }
-  90% {
-      color: #484848;
-      text-shadow: none;
-  }
-  100% {
-      color: #fff900;
-      text-shadow: 0 0 7px #fff900;
-  }
-}
-
-.lettre:nth-child(1){
-  animation-delay: 0.1s;
-}
-.lettre:nth-child(2){
-  animation-delay: 0.2s;
-}
-.lettre:nth-child(3){
-  animation-delay: 0.3s;
-}
-.lettre:nth-child(4){
-  animation-delay: 0.4s;
-}
-.lettre:nth-child(5){
-  animation-delay: 0.5s;
-}
-.lettre:nth-child(6){
-  animation-delay: 0.6s;
-}
-.lettre:nth-child(7){
-  animation-delay: 0.7s;
-}
-.lettre:nth-child(8){
-  animation-delay: 0.8s;
-}
-.lettre:nth-child(9){
-  animation-delay: 0.9s;
-}
-.lettre:nth-child(10){
-  animation-delay: 1s;
-}
-
-.fondu-out {
-  opacity: 0;
-  transition: opacity 0.4s ease-out;
 }
