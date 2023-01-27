@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { map, Observable, startWith } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-depot-de-voiture',
@@ -9,6 +9,7 @@ import { map, Observable, startWith } from 'rxjs';
   styleUrls: ['./depot-de-voiture.component.css']
 })
 export class DepotDeVoitureComponent implements OnInit {
+  loading = false;
   public form!: FormGroup;
   isSubmitted = false;
   numero!: string | null;
@@ -18,7 +19,7 @@ export class DepotDeVoitureComponent implements OnInit {
   filteredOptions!: Observable<string[]>;
   marques: string[] = ['Hydrogen', 'Beryllium', 'Neon'];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
     this.form = this.fb.group({
       numero: ['', [Validators.required]],
       marque: ['', [Validators.required]]/*,
@@ -33,17 +34,11 @@ export class DepotDeVoitureComponent implements OnInit {
     );
   }
 
-  // onDateChange(event: MatDatepickerInputEvent<Date> | any) {
-  //   this.date = event.value;
-  // }
-
 
   submit() {
     this.isSubmitted = true;
     if (this.form.valid) {
-      console.log(this.numero);
-      console.log(this.marque);
-      // console.log(this.date);
+      this.loading = true;
       fetch('https://garage-backend-sigma.vercel.app/voiture/depot', {
         method: 'POST',
         body: JSON.stringify({
@@ -56,16 +51,24 @@ export class DepotDeVoitureComponent implements OnInit {
         }
       })
       .then(response => {
+        this.loading = false;
         const code = response.status;
         if(code == 201) {
           this.form.reset();
-          console.log(response.json());
+          this.snackBar.open('Voiture déposée avec succès!', 'Fermer', {
+            duration: 10000
+          });
         } else {
-          console.error("Une erreur s'est produite");
+          response.json().then(data => {
+            this.snackBar.open(data.message, 'Fermer', {
+              duration: 10000
+            });
+          });
         }
         this.isSubmitted = false;
       })
       .catch(error => {
+        this.loading = false;
         console.error(error)
       })
     }
