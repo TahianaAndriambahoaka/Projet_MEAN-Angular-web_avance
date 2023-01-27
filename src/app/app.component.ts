@@ -1,21 +1,10 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { LoadingComponent } from './loading/loading.component';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  entryComponents: [LoadingComponent]
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
   title = 'm1p10mean-tahiana-tsantaniaina';
-  loading: boolean = true;
-
-  constructor() {}
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.loading = false;
-   }, 1000);
-  }
 }
