@@ -46,6 +46,7 @@ import { StatistiqueComponent } from './responsableFinancier/statistique/statist
 
 import { VoirFactureComponent as VoirFactureResponsableFinancierComponent } from './responsableFinancier/voir-facture/voir-facture.component';
 import { MediaQueryService } from './media-query-service.service';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { MediaQueryService } from './media-query-service.service';
     AccueilResponsableFinancierComponent,
     ValidationPaiementComponent,
     StatistiqueComponent,
-    VoirFactureResponsableFinancierComponent
+    VoirFactureResponsableFinancierComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

@@ -12,8 +12,10 @@ import { ReparationAvancementComponent } from './client/reparation-avancement/re
 import { FactureEtatPaiementComponent } from './client/facture-etat-paiement/facture-etat-paiement.component';
 import { HistoriqueReparationComponent } from './client/historique-reparation/historique-reparation.component';
 import { AccueilComponent as AccueilResponsableFinancierComponent} from './responsableFinancier/accueil/accueil.component';
+import { LoadingComponent } from './loading/loading.component';
 
 const routes: Routes = [
+  { path: "loading", component: LoadingComponent },
   { path: "", component: LoginComponent },
   { path: "inscription", component: InscriptionComponent },
   {
