@@ -10,7 +10,7 @@
 
                   <div class="pdp w3-container" (click)="changePDP()">
                     <img id="profileImage" [src]="pdpURL" alt="Photo de profil" class="pdp__image">
-                    <mat-progress-bar mode="determinate" value="{{percentage}}"></mat-progress-bar>
+                    <mat-progress-bar *ngIf="percentage > 0"  mode="determinate" value="{{percentage}}"></mat-progress-bar>
                     <input id="imageUpload" type="file" placeholder="Photo" style="display: none;" accept="image/*" (change)=selectPDP($event)>
                   </div>
 
@@ -24,7 +24,7 @@
                   <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
               <span style="color: red;" *ngIf="isSubmitted && errorControl['nom'].errors && errorControl['nom'].errors!['required']">
-                *Veuillez remplir ce champ.
+                *Votre nom est requis.
               </span>
 
               <div class="wrap-input100 validate-input mt-4">
@@ -33,7 +33,7 @@
                   <span class="focus-input100" data-symbol="&#xf206;"></span>
               </div>
               <span style="color: red;" *ngIf="isSubmitted && errorControl['prenom'].errors && errorControl['prenom'].errors!['required']">
-                *Veuillez remplir ce champ.
+                *Votre prénom est requis.
               </span>
 
               <div class="wrap-input100 validate-input mt-4">
@@ -42,10 +42,10 @@
                   <span class="focus-input100" data-symbol="&#xf15a;"></span>
               </div>
               <span style="color: red;" *ngIf="isSubmitted && errorControl['mail'].errors && errorControl['mail'].errors!['required']">
-                *Veuillez remplir ce champ.
+                *Adresse mail requise.
               </span>
               <span style="color: red;" *ngIf="isSubmitted && errorControl['mail'].errors && errorControl['mail'].errors!['pattern']">
-                *Veuillez entrer une adresse mail valide.
+                *Adresse mail invalide.
               </span>
 
               <div class="wrap-input100 validate-input mt-4">
@@ -54,10 +54,13 @@
                   <span class="focus-input100" data-symbol="&#xf190;"></span>
               </div>
               <span style="color: red; display: block;" *ngIf="isSubmitted && errorControl['mdp1'].errors && errorControl['mdp1'].errors!['required']">
-                *Veuillez remplir ce champ.
+                *Mot de passe requis.
               </span>
               <span style="color: red;" *ngIf="isSubmitted && errorControl['mdp1'].errors && errorControl['mdp1'].errors!['minlength']">
-                *Votre mot de passe est trop court.
+                *Mot de passe d'au moins 8 caractères requis.
+              </span>
+              <span style="color: red;" *ngIf="isSubmitted && errorControl['mdp1'].errors && errorControl['mdp1'].errors!['pattern']">
+                *Au moins une lettre minuscule et majuscule, un chiffre et un caractère spéciale.
               </span>
 
               <div class="wrap-input100 validate-input mt-4">
@@ -66,10 +69,10 @@
                   <span class="focus-input100" data-symbol="&#xf190;"></span>
               </div>
               <span style="color: red; display: block;" *ngIf="isSubmitted && errorControl['mdp2'].errors && errorControl['mdp2'].errors!['required']">
-                *Veuillez remplir ce champ.
+                *Veuillez confirmer le mot de passe.
               </span>
               <span style="color: red;" *ngIf="isSubmitted && !passwordMatchValidator()">
-                *Les mots de passe ne sont pas identiques.
+                *Mots de passe non identiques.
               </span>
 
               <div class="text-right p-t-8 p-b-31">
@@ -78,7 +81,10 @@
               <div class="container-login100-form-btn p-t-8 p-b-31">
                   <div class="wrap-login100-form-btn">
                       <div class="login100-form-bgbtn"></div>
-                      <button id="boutton" class="login100-form-btn">
+                      <button *ngIf="loading"  id="boutton" class="login100-form-btn" disabled>
+                        <span class="spinner-loader"></span>
+                      </button>
+                      <button *ngIf="!loading"  id="boutton" class="login100-form-btn">
                           S'inscrire
                       </button>
                   </div>

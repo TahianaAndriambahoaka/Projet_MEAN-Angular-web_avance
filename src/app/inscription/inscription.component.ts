@@ -14,7 +14,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./inscription.component.css']
 })
 export class InscriptionComponent implements OnInit {
-
+  loading:boolean = false;
   isHovering: boolean | undefined;
   defaultPdpURL : any = 'https://firebasestorage.googleapis.com/v0/b/m1p10mean-tahiana-tsantaniaina.appspot.com/o/pdp%2FT0266FRGM-U2Q173U05-g863c2a865d7-512.png?alt=media&token=85d91b21-3a25-438a-99f5-d9495bac4ba3';
   pdpURL : any = 'https://firebasestorage.googleapis.com/v0/b/m1p10mean-tahiana-tsantaniaina.appspot.com/o/pdp%2FT0266FRGM-U2Q173U05-g863c2a865d7-512.png?alt=media&token=85d91b21-3a25-438a-99f5-d9495bac4ba3';
@@ -35,7 +35,13 @@ export class InscriptionComponent implements OnInit {
       nom: ['', [Validators.required]],
       prenom: ['', [Validators.required]],
       mail: ['', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
-      mdp1: ['', [Validators.required, Validators.minLength(8)]],
+      mdp1: ['', [
+        Validators.required,
+        Validators.pattern(/[a-z]/), // au moins une lettre minuscule
+        Validators.pattern(/[A-Z]/), // au moins une lettre majuscule
+        Validators.pattern(/\d/),    // au moins un chiffre
+        Validators.pattern(/[!@#\$%\^\&*\)\(+=._-]/) // au moins un caractère spécial
+      ]],
       mdp2: ['', [Validators.required]]
     });
   }
@@ -43,7 +49,11 @@ export class InscriptionComponent implements OnInit {
   passwordMatchValidator() {
     const password = this.form.get('mdp1')?.value;
     const confirmPassword = this.form.get('mdp2')?.value;
-    return password === confirmPassword ? true : false;
+    if (password !== confirmPassword && confirmPassword !== '') {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   ngOnInit(): void {}
@@ -75,16 +85,12 @@ export class InscriptionComponent implements OnInit {
   submit() {
     this.isSubmitted = true;
     if (this.form.valid && this.passwordMatchValidator()) {
-      $('#boutton').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>&nbsp;Chargement...');
+      this.loading = true;
       this.nom = this.form.get('nom')?.value;
       this.prenom = this.form.get('prenom')?.value;
       this.mail = this.form.get('mail')?.value;
       this.mdp1 = this.form.get('mdp1')?.value;
       this.mdp2 = this.form.get('mdp2')?.value;
-      console.log(this.nom);
-      console.log(this.prenom);
-      console.log(this.mail);
-      console.log(this.mdp1);
 
       if(this.pdp) {
         this.count = 1;
@@ -138,16 +144,15 @@ export class InscriptionComponent implements OnInit {
         }
       })
       .then(res => {
+        this.loading = false;
         const code = res.status;
         if(code == 201) {
           this.isSubmitted = false;
           this.form.reset();
-          $('#boutton').html("S'inscrire");
           var x = document.getElementById("success");
           x!.className = "show";
           setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
         } else {
-          $('#boutton').html("S'inscrire");
           res.json().then(data => {
             const message = data.message;
             if (typeof message == 'string') {
@@ -156,7 +161,6 @@ export class InscriptionComponent implements OnInit {
               x!.className = "show";
               setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
             } else {
-              $('#boutton').html("S'inscrire");
               var x = document.getElementById("error");
               x!.innerHTML = "Une erreur s'est produite! Veuillez réessayer!";
               x!.className = "show";
@@ -166,9 +170,9 @@ export class InscriptionComponent implements OnInit {
         }
       })
       .catch(err => {
+        this.loading = false
         console.error('err');
         console.error(err);
-        $('#boutton').html("S'inscrire");
         var x = document.getElementById("error");
         x!.className = "show";
         setTimeout(function(){ x!.className = x!.className.replace("show", ""); }, 10000);
