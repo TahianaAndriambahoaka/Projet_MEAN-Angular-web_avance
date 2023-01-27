@@ -27,6 +27,11 @@ export class ReceptionVoitureComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
+    this.getData();
+  }
+
+  getData() {
+    this.liste_voiture = [];
     fetch('https://garage-backend-sigma.vercel.app/voiture/non-receptionees', {
       method: 'GET',
       headers: {
@@ -75,10 +80,14 @@ export class ReceptionVoitureComponent implements AfterViewInit, OnInit {
   }
 
   openDialog(numero: string) {
-    this.dialog.open(ListerReparationComponent, {
+    const dialogRef = this.dialog.open(ListerReparationComponent, {
       data: {
         numero: numero
       }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getData();
     });
   }
 

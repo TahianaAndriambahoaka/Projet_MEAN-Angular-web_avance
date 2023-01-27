@@ -110,6 +110,32 @@ export class ListerReparationComponent {
   }
 
   submit() {
-    console.log(JSON.stringify(this.liste_reparation));
+    fetch('https://garage-backend-sigma.vercel.app/voiture/reception', {
+        method: 'PUT',
+        body: JSON.stringify({
+          numero: this.numero,
+          reparation: this.liste_reparation
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': sessionStorage.getItem('token-responsable_atelier')!
+        }
+      })
+      .then(response => {
+        const code = response.status;
+        console.log(code);
+        console.log(response);
+        if(code == 200) {
+          this.form1.reset();
+          this.form2.reset();
+          this.liste_reparation = [];
+          document.getElementById('close')?.click();
+        } else {
+          console.error("Une erreur s'est produite");
+        }
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 }
