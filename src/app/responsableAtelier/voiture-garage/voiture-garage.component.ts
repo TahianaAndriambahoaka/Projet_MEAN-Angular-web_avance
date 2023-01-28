@@ -17,7 +17,8 @@ interface Reparation {
   frais: number,
   debut_reparation: Date | null,
   fin_reparation: Date | null,
-  description: string
+  description: string,
+  etat: string
 }
 
 interface Voiture {
@@ -81,8 +82,10 @@ export class VoitureGarageComponent implements OnInit {
                 debut_reparation: element2.debut_reparation,
                 fin_reparation : element2.fin_reparation,
                 description : element2.description,
-                achat_piece : achat_piece
+                achat_piece : achat_piece,
+                etat: element2.etat
               };
+              reparation.push(rep);
             });
             const voiture : Voiture = {
               marque: element.voiture_join[0].marque,
@@ -118,9 +121,13 @@ export class VoitureGarageComponent implements OnInit {
   }
 
   changerReparationAvancement(i: number) {
-    this.dialog.open(ChangerReparationAvancementComponent, {
-      data: {
-        voiture: this.liste_voiture[i]
+    var dialogRef = this.dialog.open(ChangerReparationAvancementComponent, {
+      data: this.liste_voiture[i]
+    });
+
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data && data.success) {
+        this.getData();
       }
     });
   }

@@ -51,6 +51,7 @@ export class LoginComponent {
             if (!data.user.poste) {
               // client
               sessionStorage.setItem('token-client', data.token);
+              sessionStorage.setItem('id-client', data.user._id);
               this.router.navigate(['/client']);
             } else {
               // employé
@@ -64,7 +65,7 @@ export class LoginComponent {
                 this.router.navigate(['/responsable-financier']);
               }
             }
-            
+
           });
         } else if(code == 401) { // erreur d'authentifiation
           res.json().then(data => {

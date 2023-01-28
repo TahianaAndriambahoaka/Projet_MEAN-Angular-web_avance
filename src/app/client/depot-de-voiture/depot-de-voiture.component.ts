@@ -42,7 +42,8 @@ export class DepotDeVoitureComponent implements OnInit {
         method: 'POST',
         body: JSON.stringify({
           marque: this.marque,
-          numero: this.numero
+          numero: this.numero,
+          idclient: sessionStorage.getItem('id-client')
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -76,7 +77,7 @@ export class DepotDeVoitureComponent implements OnInit {
   get errorControl() {
     return this.form.controls;
   }
-  
+
   private _filter(value: string): string[] {
     return this.marques.filter(option => option.toLowerCase().includes(value.toLowerCase()));
   }

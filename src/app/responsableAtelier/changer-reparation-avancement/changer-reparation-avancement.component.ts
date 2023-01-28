@@ -1,23 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-
-const ELEMENT_DATA = [
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée', changer: ''},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation', changer: ''},
-];
 
 interface AchatPiece {
   nom: string,
@@ -30,7 +14,8 @@ interface Reparation {
   frais: number,
   debut_reparation: Date | null,
   fin_reparation: Date | null,
-  description: string
+  description: string,
+  etat: string
 }
 
 interface Voiture {
@@ -45,25 +30,96 @@ interface Voiture {
   styleUrls: ['./changer-reparation-avancement.component.css']
 })
 export class ChangerReparationAvancementComponent {
-  displayedColumns: string[] = ['reparation', 'etat_avancement', 'changer'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-  numero!: string;
-  marque!: string;
+  loading = false;
+  displayedColumns: string[] = ['reparation', 'debut', 'fin', 'etat_avancement', 'changer'];
+  dataSource!: MatTableDataSource<Reparation>;
   voiture!: Voiture;
+  liste_reparation!: Reparation[];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Voiture) {
-    this.numero = 'coco';
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Voiture, private dialogRef: MatDialogRef<ChangerReparationAvancementComponent>, private snackBar: MatSnackBar) {
     this.voiture = data;
-    console.log(this.voiture);
+    this.liste_reparation = data.reparation;
+    this.dataSource = new MatTableDataSource(this.liste_reparation);
+    console.log(this.liste_reparation);
   }
 
-  changer(index: number) {
-    const etat = ELEMENT_DATA[index].etat_avancement;
-    ELEMENT_DATA[index].etat_avancement = etat!='Réparée'?'Réparée':'En cours de réparation';
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+  commencer(index: number) {
+    this.loading = true;
+    fetch('https://garage-backend-sigma.vercel.app/voiture/commencer-reparation', {
+        method: 'PUT',
+        body: JSON.stringify({
+          numero: this.voiture.numero,
+          description: this.liste_reparation[index].description
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': sessionStorage.getItem('token-responsable_atelier')!
+        }
+      })
+      .then(response => {
+        this.loading = false;
+        const code = response.status;
+        console.log(code);
+        console.log(response);
+        if(code == 200) {
+          this.liste_reparation = [];
+          this.snackBar.open("État d'avancement changé avec succès!", 'Fermer', {
+            duration: 10000
+          });
+          this.dialogRef.close({ success: true });
+        } else {
+          response.json().then(data => {
+            this.snackBar.open(data.message, 'Fermer', {
+              duration: 10000
+            });
+          });
+        }
+      })
+      .catch(error => {
+        this.loading = false;
+        console.error(error)
+      })
+  }
+
+  finir(index: number) {
+    this.loading = true;
+    fetch('https://garage-backend-sigma.vercel.app/voiture/finir-reparation', {
+        method: 'PUT',
+        body: JSON.stringify({
+          numero: this.voiture.numero,
+          description: this.liste_reparation[index].description
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': sessionStorage.getItem('token-responsable_atelier')!
+        }
+      })
+      .then(response => {
+        this.loading = false;
+        const code = response.status;
+        console.log(code);
+        console.log(response);
+        if(code == 200) {
+          this.liste_reparation = [];
+          this.snackBar.open("État d'avancement changé avec succès!", 'Fermer', {
+            duration: 10000
+          });
+          this.dialogRef.close({ success: true });
+        } else {
+          response.json().then(data => {
+            this.snackBar.open(data.message, 'Fermer', {
+              duration: 10000
+            });
+          });
+        }
+      })
+      .catch(error => {
+        this.loading = false;
+        console.error(error)
+      })
   }
 
   valider() {
-    console.log(ELEMENT_DATA);
+    console.log(this.liste_reparation);
   }
 }
