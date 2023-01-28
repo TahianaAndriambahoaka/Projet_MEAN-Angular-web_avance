@@ -63,6 +63,10 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-raised-button mat-dialog-close id="close">Annuler</button>
-    <button mat-raised-button color="primary" (click)="submit()">Valider</button>
+    <button mat-raised-button color="primary" (click)="submit()" *ngIf="!loading && liste_reparation.length == 0" disabled>Valider</button>
+    <button mat-raised-button color="primary" (click)="submit()" *ngIf="!loading && liste_reparation.length > 0">Valider</button>
+    <button *ngIf="loading" mat-raised-button disabled>
+      <span class="spinner-loader" style="font-size: 5px;"></span>
+    </button>
   </mat-dialog-actions>
 </div>

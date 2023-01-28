@@ -92,8 +92,10 @@ export class ReceptionVoitureComponent implements AfterViewInit, OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.getData();
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data && data.success) {
+        this.getData();
+      }
     });
   }
 

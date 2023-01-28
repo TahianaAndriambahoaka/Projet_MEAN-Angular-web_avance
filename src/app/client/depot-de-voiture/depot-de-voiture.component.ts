@@ -22,8 +22,7 @@ export class DepotDeVoitureComponent implements OnInit {
   constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
     this.form = this.fb.group({
       numero: ['', [Validators.required]],
-      marque: ['', [Validators.required]]/*,
-      date: ['', [Validators.required]]*/
+      marque: ['', [Validators.required]]
     });
   }
 

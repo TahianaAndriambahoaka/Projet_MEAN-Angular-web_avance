@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface AchatPiece {
   nom: string,
@@ -23,6 +24,7 @@ interface Reparation {
   styleUrls: ['./lister-reparation.component.css']
 })
 export class ListerReparationComponent {
+  loading: boolean = false;
   numero!: string;
 
   form1!: FormGroup;
@@ -39,7 +41,7 @@ export class ListerReparationComponent {
   liste_reparation: Reparation[] = [];
   tempId!:number;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,private dialogRef: MatDialogRef<ListerReparationComponent>, private snackBar: MatSnackBar) {
     this.numero = data.numero;
     this.form1 = this.fb.group({
       reparation: ['', [Validators.required]],
@@ -110,6 +112,7 @@ export class ListerReparationComponent {
   }
 
   submit() {
+    this.loading = true;
     fetch('https://garage-backend-sigma.vercel.app/voiture/reception', {
         method: 'PUT',
         body: JSON.stringify({
@@ -122,6 +125,7 @@ export class ListerReparationComponent {
         }
       })
       .then(response => {
+        this.loading = false;
         const code = response.status;
         console.log(code);
         console.log(response);
@@ -129,12 +133,20 @@ export class ListerReparationComponent {
           this.form1.reset();
           this.form2.reset();
           this.liste_reparation = [];
-          document.getElementById('close')?.click();
+          this.snackBar.open('Voiture reçue avec succès!', 'Fermer', {
+            duration: 10000
+          });
+          this.dialogRef.close({ success: true });
         } else {
-          console.error("Une erreur s'est produite");
+          response.json().then(data => {
+            this.snackBar.open(data.message, 'Fermer', {
+              duration: 10000
+            });
+          });
         }
       })
       .catch(error => {
+        this.loading = false;
         console.error(error)
       })
   }
