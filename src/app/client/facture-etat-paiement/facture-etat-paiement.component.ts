@@ -3,20 +3,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 var ELEMENT_DATA = [
-  {description: 'Réparation ...', quantite: 1, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 2, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 1, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 2, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 1, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 2, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 1, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 2, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 1, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 2, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 1, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 2, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 1, prix: 20000, montant: 0},
-  {description: 'Réparation ...', quantite: 2, prix: 20000, montant: 0},
+  {type: 'Réparation', description: "Remplacement de la courroie d'accessoire", quantite: 1, prix_unitaire: 20000, montant: 0},
+  {type: 'Réparation', description: 'Remplacement de la roue arrière gauche', quantite: 1, prix_unitaire: 20000, montant: 0},
+  {type: 'Achat de pièces', description: 'Pneu arrière gauche', quantite: 1, prix_unitaire: 20000, montant: 0},
+  {type: 'Achat de pièces', description: 'Filtre à huile', quantite: 1, prix_unitaire: 20000, montant: 0},
+  {type: 'Achat de pièces', description: 'Courroie', quantite: 2, prix_unitaire: 20000, montant: 0},
 ];
 
 @Component({
@@ -25,7 +16,7 @@ var ELEMENT_DATA = [
   styleUrls: ['./facture-etat-paiement.component.css']
 })
 export class FactureEtatPaiementComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['description', 'quantite', 'prix', 'montant'];
+  displayedColumns: string[] = ['type', 'description', 'quantite', 'prix-unitaire', 'montant'];
   dataSource:any;
   numero!: string;
   marque!: string;
@@ -40,7 +31,7 @@ export class FactureEtatPaiementComponent implements AfterViewInit, OnInit {
       this.numero = params.get('numero')!;
       this.montantTotal = 0;
       ELEMENT_DATA = ELEMENT_DATA.map(obj => {
-        obj.montant = obj.prix * obj.quantite;
+        obj.montant = obj.prix_unitaire * obj.quantite;
         this.montantTotal += obj.montant;
         return obj;
       });
