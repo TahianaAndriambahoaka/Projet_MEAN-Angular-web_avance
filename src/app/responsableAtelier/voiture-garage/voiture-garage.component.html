@@ -28,7 +28,7 @@
 
     <ng-container matColumnDef="facture">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element" (click)="voirFacture(element.numero)">
+      <td mat-cell *matCellDef="let element; let i = index" (click)="voirFacture(i)">
         <button mat-raised-button>Voir la facture</button>
       </td>
     </ng-container>

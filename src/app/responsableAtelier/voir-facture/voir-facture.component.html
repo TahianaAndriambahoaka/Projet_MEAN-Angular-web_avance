@@ -1,8 +1,8 @@
 <div style="width: 60vw; background-color: rgb(255, 255, 255); height: 80vh;">
   <h1 mat-dialog-title style="font-weight: bold; font-size: large;">Facture et l'état de paiement</h1>
   <mat-dialog-content class="mat-typography" style="margin-top: 1em;">
-    <p><b>Numéro : </b>{{numero}}</p>
-    <p><b>Marque : </b>Toyota Fortuner</p>
+    <p><b>Numéro : </b>{{voiture.numero}}</p>
+    <p><b>Marque : </b>{{voiture.marque}}</p>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 50vw;">
 
       <ng-container matColumnDef="type">
@@ -90,6 +90,9 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-raised-button mat-dialog-close>Fermer</button>
-    <button mat-raised-button color="primary">Valider le bon de sortie de la voiture</button>
+    <button *ngIf="!loading && estPaye" mat-raised-button color="primary" (click)="valider()">Valider le bon de sortie de la voiture</button>
+    <button *ngIf="loading" mat-raised-button disabled>
+      <span class="spinner-loader" style="font-size: 5px;"></span>
+    </button>
   </mat-dialog-actions>
 </div>

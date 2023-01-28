@@ -121,7 +121,7 @@ export class VoitureGarageComponent implements OnInit {
   }
 
   changerReparationAvancement(i: number) {
-    var dialogRef = this.dialog.open(ChangerReparationAvancementComponent, {
+    const dialogRef = this.dialog.open(ChangerReparationAvancementComponent, {
       data: this.liste_voiture[i]
     });
 
@@ -132,10 +132,14 @@ export class VoitureGarageComponent implements OnInit {
     });
   }
 
-  voirFacture(numero: string) {
-    this.dialog.open(VoirFactureComponent, {
-      data: {
-        numero: numero
+  voirFacture(i: number) {
+    const dialogRef = this.dialog.open(VoirFactureComponent, {
+      data: this.liste_voiture[i]
+    });
+
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data && data.success) {
+        this.getData();
       }
     });
   }
