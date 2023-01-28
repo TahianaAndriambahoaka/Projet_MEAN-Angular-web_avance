@@ -19,6 +19,26 @@ const ELEMENT_DATA = [
   {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation', changer: ''},
 ];
 
+interface AchatPiece {
+  nom: string,
+  pu: number,
+  quantite: number
+}
+
+interface Reparation {
+  achat_piece: AchatPiece[],
+  frais: number,
+  debut_reparation: Date | null,
+  fin_reparation: Date | null,
+  description: string
+}
+
+interface Voiture {
+  marque: string,
+  numero: string,
+  reparation: Reparation[]
+}
+
 @Component({
   selector: 'app-changer-reparation-avancement',
   templateUrl: './changer-reparation-avancement.component.html',
@@ -29,9 +49,12 @@ export class ChangerReparationAvancementComponent {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   numero!: string;
   marque!: string;
+  voiture!: Voiture;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.numero = data.numero;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Voiture) {
+    this.numero = 'coco';
+    this.voiture = data;
+    console.log(this.voiture);
   }
 
   changer(index: number) {
