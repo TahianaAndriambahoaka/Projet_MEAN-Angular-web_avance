@@ -13,9 +13,10 @@ interface AchatPiece {
 interface Reparation {
   achat_piece: AchatPiece[],
   frais: number,
-  debut_reparation: Date,
+  debut_reparation: Date | null,
   fin_reparation: Date | null,
-  description: string
+  description: string,
+  etat: string
 }
 
 @Component({
@@ -68,9 +69,10 @@ export class ListerReparationComponent {
       const rep: Reparation = {
         achat_piece: [],
         frais: this.prixReparation!,
-        debut_reparation: new Date(),
+        debut_reparation: null,
         fin_reparation: null,
-        description: this.reparation!
+        description: this.reparation!,
+        etat: 'non-paye'
       };
       this.liste_reparation.push(rep);
       this.form1.reset();
