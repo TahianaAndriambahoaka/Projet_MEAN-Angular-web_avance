@@ -1,5 +1,6 @@
-<app-loading *ngIf="isLoading" ></app-loading>
-<div *ngIf="!isLoading" style="overflow-x: auto;">
+<app-loading-error *ngIf="error"></app-loading-error>
+<app-loading *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading && !error" style="overflow-x: auto;">
   <h1>Liste des voitures à réceptionner</h1>
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8" style="width: 100%;">
 

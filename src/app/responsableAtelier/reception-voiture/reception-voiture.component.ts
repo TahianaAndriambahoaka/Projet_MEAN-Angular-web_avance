@@ -1,3 +1,4 @@
+import { LoadingErrorComponent } from './../../loading-error/loading-error.component';
 import { ListerReparationComponent } from './../lister-reparation/lister-reparation.component';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
@@ -16,10 +17,11 @@ interface Voiture {
   selector: 'app-reception-voiture',
   templateUrl: './reception-voiture.component.html',
   styleUrls: ['./reception-voiture.component.css'],
-  entryComponents: [LoadingComponent]
+  entryComponents: [LoadingComponent, LoadingErrorComponent]
 })
 export class ReceptionVoitureComponent implements AfterViewInit, OnInit {
   isLoading = true;
+  error = false;
   displayedColumns: string[] = ['numero', 'marque', 'dateDepot', 'reception'];
   liste_voiture!: Voiture[];
   dataSource!: MatTableDataSource<Voiture>;
@@ -45,6 +47,7 @@ export class ReceptionVoitureComponent implements AfterViewInit, OnInit {
     })
     .then(response => {
       this.isLoading = false;
+      this.error = false;
       const rep = response.json();
       const code = response.status;
       if(code == 200) {
@@ -63,11 +66,13 @@ export class ReceptionVoitureComponent implements AfterViewInit, OnInit {
           this.dataSource = new MatTableDataSource(this.liste_voiture);
         });
       } else {
+        this.error = true;
         console.error("Une erreur s'est produite");
       }
     })
     .catch(error => {
       this.isLoading = false;
+      this.error = true;
       console.error(error);
     })
   }

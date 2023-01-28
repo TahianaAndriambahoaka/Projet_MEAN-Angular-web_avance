@@ -47,6 +47,7 @@ import { StatistiqueComponent } from './responsableFinancier/statistique/statist
 import { VoirFactureComponent as VoirFactureResponsableFinancierComponent } from './responsableFinancier/voir-facture/voir-facture.component';
 import { MediaQueryService } from './media-query-service.service';
 import { LoadingComponent } from './loading/loading.component';
+import { LoadingErrorComponent } from './loading-error/loading-error.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { LoadingComponent } from './loading/loading.component';
     ValidationPaiementComponent,
     StatistiqueComponent,
     VoirFactureResponsableFinancierComponent,
-    LoadingComponent
+    LoadingComponent,
+    LoadingErrorComponent
   ],
   imports: [
     BrowserModule,
