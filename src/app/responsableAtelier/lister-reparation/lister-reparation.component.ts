@@ -89,11 +89,6 @@ export class ListerReparationComponent {
     document.getElementById('form2')?.setAttribute('style', '');
   }
 
-  // supprimerReparation(index: number) {
-  //   LISTE_REPARATION.splice(index, 1);
-  //   this.dataSourceReparation = new MatTableDataSource(LISTE_REPARATION);
-  // }
-
   ajoutAchatPiece() {
     this.form2Submitted = true;
     if (this.form2.valid) {
