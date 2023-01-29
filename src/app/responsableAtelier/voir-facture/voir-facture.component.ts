@@ -3,14 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 
-var ELEMENT_DATA = [
-  {type: 'Réparation', description: "Remplacement de la courroie d'accessoire", quantite: 1, prix_unitaire: 20000, montant: 0},
-  {type: 'Réparation', description: 'Remplacement de la roue arrière gauche', quantite: 1, prix_unitaire: 20000, montant: 0},
-  {type: 'Achat de pièces', description: 'Pneu arrière gauche', quantite: 1, prix_unitaire: 20000, montant: 0},
-  {type: 'Achat de pièces', description: 'Filtre à huile', quantite: 1, prix_unitaire: 20000, montant: 0},
-  {type: 'Achat de pièces', description: 'Courroie', quantite: 2, prix_unitaire: 20000, montant: 0},
-];
-
 interface AchatPiece {
   nom: string,
   pu: number,
@@ -23,7 +15,7 @@ interface Reparation {
   debut_reparation: Date | null,
   fin_reparation: Date | null,
   description: string,
-  etat: string
+  payement: Date | null
 }
 
 interface Voiture {
@@ -66,7 +58,7 @@ export class VoirFactureComponent {
 
     this.facture = [];
     this.liste_reparation.forEach(element => {
-      if (element.etat == 'non-paye') {
+      if (element.payement == null) {
         this.estPaye = false;
       }
       let f : Facture = {

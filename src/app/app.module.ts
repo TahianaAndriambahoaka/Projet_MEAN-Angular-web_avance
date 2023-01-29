@@ -48,6 +48,7 @@ import { VoirFactureComponent as VoirFactureResponsableFinancierComponent } from
 import { MediaQueryService } from './media-query-service.service';
 import { LoadingComponent } from './loading/loading.component';
 import { LoadingErrorComponent } from './loading-error/loading-error.component';
+import { ListePaiementNonValideComponent } from './responsableFinancier/liste-paiement-non-valide/liste-paiement-non-valide.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { LoadingErrorComponent } from './loading-error/loading-error.component';
     StatistiqueComponent,
     VoirFactureResponsableFinancierComponent,
     LoadingComponent,
-    LoadingErrorComponent
+    LoadingErrorComponent,
+    ListePaiementNonValideComponent
   ],
   imports: [
     BrowserModule,

@@ -1,41 +1,63 @@
-<div style="overflow-x: auto;">
-  <h1>Liste des paiements non validés</h1>
-  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8" style="width: 100%;">
+<div style="background-color: rgb(255, 255, 255);">
+  <h1 mat-dialog-title style="font-weight: bold; font-size: large;">Liste des réparations</h1>
+  <mat-dialog-content class="mat-typography" style="margin-top: 1em;">
+    <p><b>Numéro : </b>{{voiture.numero}}</p>
+    <p><b>Marque : </b>{{voiture.marque}}</p>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <ng-container matColumnDef="numero">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Numéro
-      </th>
-      <td mat-cell *matCellDef="let element"> {{element.numero}} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="marque">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Marque
-      </th>
-      <td mat-cell *matCellDef="let element"> {{element.marque}} </td>
-    </ng-container>
+      <ng-container matColumnDef="reparation">
+        <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number">
+          Réparation
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      </ng-container>
 
 
-    <ng-container matColumnDef="voirFacture">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-raised-button (click)="voirFacture(element.numero)">Voir la facture</button>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="debut">
+        <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number">
+          Début
+        </th>
+        <td mat-cell *matCellDef="let element"> {{ (element.debut_reparation) ? (element.debut_reparation | date:'dd MMMM yyyy' : 'fr') : '-' }} </td>
+      </ng-container>
 
 
-    <ng-container matColumnDef="validerPaiement">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-raised-button (click)="validerPaiement(element.numero)">Valider le paiement</button>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="fin">
+        <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number">
+          Fin
+        </th>
+        <td mat-cell *matCellDef="let element"> {{ (element.fin_reparation) ? (element.fin_reparation | date:'dd MMMM yyyy' : 'fr') : '-' }} </td>
+      </ng-container>
 
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <ng-container matColumnDef="etat_avancement">
+        <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by name">
+          État d'avancement
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <button style="background-color: darkcyan; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>Réparée</button>
+        </td>
+      </ng-container>
 
-  </table>
+
+
+      <ng-container matColumnDef="valider">
+        <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by name"></th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <button *ngIf="!loading && element.payement == null" mat-raised-button (click)="valider(i)">Valider le paiement</button>
+          <button *ngIf="!loading && element.payement != null" style="background-color: rgb(0, 28, 139); color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>Payée</button>
+          <button *ngIf="loading" mat-raised-button disabled>
+            <span class="spinner-loader" style="font-size: 5px;"></span>
+          </button>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Fermer</button>
+  </mat-dialog-actions>
 </div>

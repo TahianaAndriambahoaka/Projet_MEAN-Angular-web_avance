@@ -1,10 +1,10 @@
-import { VoirFactureComponent } from './../voir-facture/voir-facture.component';
-import { ChangerReparationAvancementComponent } from './../changer-reparation-avancement/changer-reparation-avancement.component';
+import { ValidationPaiementComponent } from './../validation-paiement/validation-paiement.component';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { VoirFactureComponent as VoirFactureResponsableFinancierComponent } from '../voir-facture/voir-facture.component';
 
 interface AchatPiece {
   nom: string,
@@ -27,18 +27,17 @@ interface Voiture {
   reparation: Reparation[]
 }
 
-
 @Component({
-  selector: 'app-voiture-garage',
-  templateUrl: './voiture-garage.component.html',
-  styleUrls: ['./voiture-garage.component.css']
+  selector: 'app-liste-paiement-non-valide',
+  templateUrl: './liste-paiement-non-valide.component.html',
+  styleUrls: ['./liste-paiement-non-valide.component.css']
 })
-export class VoitureGarageComponent implements OnInit {
+export class ListePaiementNonValideComponent implements OnInit {
   isLoading = true;
   error = false;
-  liste_voiture!: Voiture[];
-  displayedColumns: string[] = ['numero', 'marque', 'avancement_reparation', 'facture'];
+  displayedColumns: string[] = ['numero', 'marque', 'etat_avancement', 'voirFacture'];
   dataSource!: MatTableDataSource<Voiture>;
+  liste_voiture!: Voiture[];
 
   constructor(private _liveAnnouncer: LiveAnnouncer, public dialog: MatDialog) {}
 
@@ -55,7 +54,7 @@ export class VoitureGarageComponent implements OnInit {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'x-auth-token': sessionStorage.getItem('token-responsable_atelier')!
+        'x-auth-token': sessionStorage.getItem('token-responsable_financier')!
       }
     })
     .then(response => {
@@ -66,8 +65,12 @@ export class VoitureGarageComponent implements OnInit {
       if(code == 200) {
         rep.then(data => {
           data.forEach((element:any) => {
+            let estRepare = true;
             let reparation : Reparation[] = [];
             element.mostRecentEvent.reparation.forEach((element2:any) => {
+              if (element2.fin_reparation == null) {
+                estRepare = false;
+              }
               let achat_piece : AchatPiece[] = [];
               element2.achat_piece.forEach((element3:any) => {
                 const ap : AchatPiece = {
@@ -87,12 +90,14 @@ export class VoitureGarageComponent implements OnInit {
               };
               reparation.push(rep);
             });
-            const voiture : Voiture = {
-              marque: element.voiture_join[0].marque,
-              numero: element.voiture_join[0].numero,
-              reparation: reparation
+            if (estRepare) {
+              const voiture : Voiture = {
+                marque: element.voiture_join[0].marque,
+                numero: element.voiture_join[0].numero,
+                reparation: reparation
+              }
+              this.liste_voiture.push(voiture);
             }
-            this.liste_voiture.push(voiture);
 
           });
           this.dataSource = new MatTableDataSource(this.liste_voiture);
@@ -120,8 +125,8 @@ export class VoitureGarageComponent implements OnInit {
     }
   }
 
-  changerReparationAvancement(i: number) {
-    const dialogRef = this.dialog.open(ChangerReparationAvancementComponent, {
+  etatAvancementReparation(i: number) {
+    const dialogRef = this.dialog.open(ValidationPaiementComponent, {
       data: this.liste_voiture[i]
     });
 
@@ -133,14 +138,8 @@ export class VoitureGarageComponent implements OnInit {
   }
 
   voirFacture(i: number) {
-    const dialogRef = this.dialog.open(VoirFactureComponent, {
+    this.dialog.open(VoirFactureResponsableFinancierComponent, {
       data: this.liste_voiture[i]
-    });
-
-    dialogRef.afterClosed().subscribe((data) => {
-      if (data && data.success) {
-        this.getData();
-      }
     });
   }
 }

@@ -40,7 +40,6 @@ export class ChangerReparationAvancementComponent {
     this.voiture = data;
     this.liste_reparation = data.reparation;
     this.dataSource = new MatTableDataSource(this.liste_reparation);
-    console.log(this.liste_reparation);
   }
 
   commencer(index: number) {

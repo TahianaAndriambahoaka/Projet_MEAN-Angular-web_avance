@@ -16,7 +16,7 @@ interface Reparation {
   debut_reparation: Date | null,
   fin_reparation: Date | null,
   description: string,
-  etat: string
+  payement: Date | null
 }
 
 @Component({
@@ -72,7 +72,7 @@ export class ListerReparationComponent {
         debut_reparation: null,
         fin_reparation: null,
         description: this.reparation!,
-        etat: 'non-paye'
+        payement: null
       };
       this.liste_reparation.push(rep);
       this.form1.reset();
