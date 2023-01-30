@@ -58,8 +58,12 @@ export class VoirFactureComponent {
 
     this.facture = [];
     this.liste_reparation.forEach(element => {
+      var paye = false;
       if (element.payement == null) {
         this.estPaye = false;
+      } else {
+        paye = true;
+        this.montantPaye += element.frais;
       }
       let f : Facture = {
         type: 'Réparation',
@@ -70,6 +74,9 @@ export class VoirFactureComponent {
       };
       this.facture.push(f);
       element.achat_piece.forEach(element2 => {
+        if (paye) {
+          this.montantPaye += element2.pu*element2.quantite;
+        }
         f = {
           type: 'Achat pièce',
           description: element2.nom,
@@ -85,7 +92,7 @@ export class VoirFactureComponent {
     this.facture.forEach(element => {
       this.montantTotal += element.montant;
     });
-    this.montantAPaye = this.montantTotal - this.montantAPaye;
+    this.montantAPaye = this.montantTotal - this.montantPaye;
     this.dataSource = new MatTableDataSource(this.facture);
   }
 
