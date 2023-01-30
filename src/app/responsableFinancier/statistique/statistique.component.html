@@ -1,8 +1,33 @@
 <app-loading-error *ngIf="error"></app-loading-error>
 <app-loading *ngIf="isLoading"></app-loading>
-<div *ngIf="!isLoading && !error">
+<div *ngIf="!isLoading && !error" style="overflow-x: auto;">
   <h1>Statistiques</h1>
-  <p style="font-size: larger;">
-    <b>Le temps de réparation moyen pour une voiture est de : </b>{{tempRepMoyen}}
-  </p>
+
+    <div>
+      <p><b>Le temps de réparation moyen pour une voiture est de : </b>{{tempRepMoyen}}</p>
+      <table mat-table [dataSource]="dataSourceListeDureeReparation" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8" style="width: 100%;">
+        <ng-container matColumnDef="numero">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Numéro</th>
+          <td mat-cell *matCellDef="let element"> {{element.numero}} </td>
+        </ng-container>
+        <ng-container matColumnDef="reparation">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Réparations</th>
+          <td mat-cell *matCellDef="let element"> {{element.reparation}} </td>
+        </ng-container>
+        <ng-container matColumnDef="debut">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Début de la réparation</th>
+          <td mat-cell *matCellDef="let element">{{element.debut | date:'dd MMMM yyyy' : 'fr'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="fin">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fin de la réparation</th>
+          <td mat-cell *matCellDef="let element">{{element.fin | date:'dd MMMM yyyy' : 'fr'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="duree">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Durée de la réparation</th>
+          <td mat-cell *matCellDef="let element">{{element.duree}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="colonneListeDureeReparation"></tr>
+        <tr mat-row *matRowDef="let row; columns: colonneListeDureeReparation;"></tr>
+      </table>
+    </div>
 </div>
