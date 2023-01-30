@@ -6,23 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { FooterComponent } from 'src/app/footer/footer.component';
 import { HeaderComponent } from '../header/header.component';
 
-const ELEMENT_DATA = [
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée'},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation'},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée'},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation'},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée'},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation'},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée'},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation'},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée'},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation'},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée'},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation'},
-  {reparation: 'Réparation ...', etat_avancement: 'Réparée'},
-  {reparation: 'Réparation ...', etat_avancement: 'En cours de réparation'},
-];
-
 interface AchatPiece {
   nom: string,
   pu: number,
@@ -79,8 +62,6 @@ export class ReparationAvancementComponent implements AfterViewInit, OnInit {
       }
     })
     .then(response => {
-      this.isLoading = false;
-      this.error = false;
       const rep = response.json();
       const code = response.status;
       if(code == 200) {
@@ -124,6 +105,8 @@ export class ReparationAvancementComponent implements AfterViewInit, OnInit {
           if(document.getElementById('clientreparationavancement')) document.getElementById('clientreparationavancement')!.scrollIntoView({behavior: 'smooth'});
 
 
+          this.isLoading = false;
+          this.error = false;
         });
       } else {
         this.error = true;
@@ -139,8 +122,10 @@ export class ReparationAvancementComponent implements AfterViewInit, OnInit {
 
   @ViewChild('clientreparationavancement') inputElement!: ElementRef;
   ngAfterViewInit() {
-    this.inputElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
-    this.dataSource.sort = this.sort;
+    if(!this.isLoading && !this.error) {
+      this.inputElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      this.dataSource.sort = this.sort;
+    }
   }
 
   announceSortChange(sortState: Sort | any) {
