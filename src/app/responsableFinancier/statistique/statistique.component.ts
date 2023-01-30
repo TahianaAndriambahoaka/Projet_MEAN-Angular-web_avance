@@ -144,6 +144,7 @@ export class StatistiqueComponent implements OnInit {
   }
 
   afficherCAJour() {
+    this.chiffreAffaireJour = [];
     let date1 = (document.getElementById('date1') as HTMLInputElement)!.value;
     let j1 = date1.split('/')[0];
     let m1 = date1.split('/')[1];
