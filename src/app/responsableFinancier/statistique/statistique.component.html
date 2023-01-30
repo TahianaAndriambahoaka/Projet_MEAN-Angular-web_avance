@@ -31,4 +31,39 @@
       <br>
       <h3 style="font-weight: normal;"><b>Le temps de réparation moyen pour une voiture est de : </b>{{tempRepMoyen}}</h3>
     </div>
+
+    <br><br>
+
+    <div style="border-radius: 25px; background-color: white; padding: 2%;">
+      <h3>Chiffre d'affaire par jour</h3>
+      <mat-form-field class="example-form-field" appearance="fill">
+        <mat-label style="color: black;">Début</mat-label>
+        <input id="date1" matInput [matDatepicker]="picker1" placeholder="Date de début">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="example-form-field" appearance="fill" style="margin-left: 10px;">
+        <mat-label style="color: black;">Fin</mat-label>
+        <input id="date2" matInput [matDatepicker]="picker2" placeholder="Date fin">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+      <button (click)="afficherCAJour()" mat-raised-button style="height: 53px; margin-bottom: 13px; background-color: rgb(245, 244, 244); margin-left: 10px;">
+        Afficher
+        <mat-icon>search</mat-icon>
+      </button>
+      <br>
+      <table mat-table [dataSource]="dataSourceChiffreAffaireJour" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8" style="width: 100%;">
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ca">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Chiffre d'affaire</th>
+          <td mat-cell *matCellDef="let element"> {{element.ca | separateurMiller}} Ariary</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="colonneChiffreAffaireJour"></tr>
+        <tr mat-row *matRowDef="let row; columns: colonneChiffreAffaireJour;"></tr>
+      </table>
+    </div>
 </div>

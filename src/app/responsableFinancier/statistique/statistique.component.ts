@@ -11,6 +11,11 @@ interface DureeReparation {
   duree: string
 }
 
+interface ChiffreAffaireJour {
+  date: Date,
+  ca: number
+}
+
 @Component({
   selector: 'app-statistique',
   templateUrl: './statistique.component.html',
@@ -24,9 +29,14 @@ export class StatistiqueComponent implements OnInit {
   colonneListeDureeReparation: string[] = ['numero', 'reparation', 'debut', 'fin', 'duree'];
   dataSourceListeDureeReparation!: MatTableDataSource<DureeReparation>;
 
+  chiffreAffaireJour!: ChiffreAffaireJour[];
+  colonneChiffreAffaireJour: string[] = ['date', 'ca'];
+  dataSourceChiffreAffaireJour!: MatTableDataSource<ChiffreAffaireJour>;
+
   constructor(private _liveAnnouncer: LiveAnnouncer) {
     this.listeDureeReparation = [];
     this.tempRepMoyen = '';
+    this.chiffreAffaireJour = [];
   }
 
   ngOnInit(): void {
@@ -131,6 +141,50 @@ export class StatistiqueComponent implements OnInit {
     seconds = (seconds < 10) ? 0 + seconds : seconds;
 
     return hours + "h:" + minutes + "mn:" + seconds + "sec";
+  }
+
+  afficherCAJour() {
+    let date1 = (document.getElementById('date1') as HTMLInputElement)!.value;
+    let j1 = date1.split('/')[0];
+    let m1 = date1.split('/')[1];
+    let a1 = date1.split('/')[2];
+    date1 = a1+'-'+m1+'-'+j1;
+    let date2 = (document.getElementById('date2') as HTMLInputElement)!.value;
+    let j2 = date2.split('/')[0];
+    let m2 = date2.split('/')[1];
+    let a2 = date2.split('/')[2];
+    date2 = a2+'-'+m2+'-'+j2;
+    const url = `https://garage-backend-sigma.vercel.app/voiture/ca-per-day?startDate=${date1}&endDate=${date2}`;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': sessionStorage.getItem('token-responsable_financier')!
+      }
+    })
+    .then(response => {
+      this.isLoading = false;
+      this.error = false;
+      const rep = response.json();
+      const code = response.status;
+      if(code == 200) {
+        rep.then(data => {
+          data.forEach((element:any) => {
+            this.chiffreAffaireJour.push({
+              date: element.date,
+              ca: element.ca
+            });
+          });
+          this.dataSourceChiffreAffaireJour = new MatTableDataSource(this.chiffreAffaireJour);
+          this.dataSourceChiffreAffaireJour.sort = this.sort;
+        });
+      } else {
+        console.error("Une erreur s'est produite");
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    })
   }
 
 }
