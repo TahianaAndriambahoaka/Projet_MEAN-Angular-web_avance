@@ -20,6 +20,12 @@ export class LoginComponent {
       login: ['', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
       mdp: ['', [Validators.required]],
     });
+    this.form.patchValue({
+      login: 'tahiana.andriamb@gmail.com',
+      mdp: 'T@h!ana2018'
+    });
+    this.login=this.form.get('login')?.value;
+    this.mdp=this.form.get('mdp')?.value;
   }
 
   submit() {
@@ -87,6 +93,42 @@ export class LoginComponent {
 
   get errorControl() {
     return this.form.controls;
+  }
+
+  choixClient() {
+    this.form.patchValue({
+      login: 'tahiana.andriamb@gmail.com',
+      mdp: 'T@h!ana2018'
+    });
+    this.login=this.form.get('login')?.value;
+    this.mdp=this.form.get('mdp')?.value;
+    this.isSubmitted = false;
+    (document.getElementById("2") as HTMLInputElement).checked = false;
+    (document.getElementById("3") as HTMLInputElement).checked = false;
+  }
+
+  choixRespAt() {
+    this.form.patchValue({
+      login: 'emptsanta@gmail.com',
+      mdp: 'P13-75-Tsanta-ETU001146'
+    });
+    this.login=this.form.get('login')?.value;
+    this.mdp=this.form.get('mdp')?.value;
+    this.isSubmitted = false;
+    (document.getElementById("1") as HTMLInputElement).checked = false;
+    (document.getElementById("3") as HTMLInputElement).checked = false;
+  }
+
+  choixRespFi() {
+    this.form.patchValue({
+      login: 'emptsantarak@gmail.com',
+      mdp: 'P13-75-Tsanta-ETU001146'
+    });
+    this.login=this.form.get('login')?.value;
+    this.mdp=this.form.get('mdp')?.value;
+    this.isSubmitted = false;
+    (document.getElementById("1") as HTMLInputElement).checked = false;
+    (document.getElementById("2") as HTMLInputElement).checked = false;
   }
 
 }

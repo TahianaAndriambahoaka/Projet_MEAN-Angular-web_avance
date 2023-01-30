@@ -8,7 +8,7 @@
 
                 <div class="wrap-input100 validate-input">
                     <span class="label-input100">Adresse mail</span>
-                    <input class="input100" type="email" name="login" formControlName="login" placeholder="Entrez votre adresse mail" required>
+                    <input id="login" class="input100" type="email" name="login" formControlName="login" placeholder="Entrez votre adresse mail" required>
                     <span class="focus-input100" data-symbol="&#xf15a;"></span>
                 </div>
                 <span style="color: red;" *ngIf="isSubmitted && errorControl['login'].errors && errorControl['login'].errors!['required']">
@@ -20,14 +20,19 @@
 
                 <div class="wrap-input100 validate-input mt-4">
                     <span class="label-input100">Mot de passe</span>
-                    <input class="input100" type="password" name="mdp" formControlName="mdp" placeholder="Entrez votre mot de passe" required>
+                    <input id="mdp" class="input100" type="password" name="mdp" formControlName="mdp" placeholder="Entrez votre mot de passe" required>
                     <span class="focus-input100" data-symbol="&#xf190;"></span>
                 </div>
                 <span style="color: red;" *ngIf="isSubmitted && errorControl['mdp'].errors && errorControl['mdp'].errors!['required']">
                   *Veuillez remplir ce champ.
                 </span>
+                <p style="color: darkgray; margin-top: 10px;">
+                  <input id="1" type="radio" (click)="choixClient()" checked><label>&nbsp;Client</label><br>
+                  <input id="2" type="radio" (click)="choixRespAt()"><label>&nbsp;Responsable Atelier</label><br>
+                  <input id="3" type="radio" (click)="choixRespFi()"><label>&nbsp;Responsable Financier</label>
+                </p>
 
-                <div class="text-right p-t-8 p-b-31">
+                <div class="text-left p-t-8 p-b-31">
                 </div>
 
                 <div class="container-login100-form-btn p-t-8 p-b-31">
