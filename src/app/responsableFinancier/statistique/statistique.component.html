@@ -1,1 +1,8 @@
-<p>statistique works!</p>
+<app-loading-error *ngIf="error"></app-loading-error>
+<app-loading *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading && !error">
+  <h1>Statistiques</h1>
+  <p style="font-size: larger;">
+    <b>Le temps de réparation moyen pour une voiture est de : </b>{{tempRepMoyen}}
+  </p>
+</div>
