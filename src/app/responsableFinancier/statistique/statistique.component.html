@@ -48,15 +48,18 @@
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
       </mat-form-field>
-      <button (click)="afficherCAJour()" mat-raised-button style="height: 53px; margin-bottom: 13px; background-color: rgb(245, 244, 244); margin-left: 10px;">
+      <button *ngIf="!loadingCAJour"  (click)="afficherCAJour()" mat-raised-button style="height: 53px; margin-bottom: 13px; background-color: rgb(245, 244, 244); margin-left: 10px;">
         Afficher
         <mat-icon>search</mat-icon>
+      </button>
+      <button *ngIf="loadingCAJour" mat-raised-button style="height: 53px; margin-bottom: 13px; background-color: rgb(245, 244, 244); margin-left: 10px;" disabled>
+        <span class="spinner-loader" style="font-size: 5px;"></span>
       </button>
       <br>
       <table mat-table [dataSource]="dataSourceChiffreAffaireJour" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8" style="width: 100%;">
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.date | date:'dd MMMM yyyy' : 'fr'}} </td>
         </ng-container>
         <ng-container matColumnDef="ca">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Chiffre d'affaire</th>

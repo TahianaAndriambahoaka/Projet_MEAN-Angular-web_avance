@@ -32,6 +32,7 @@ export class StatistiqueComponent implements OnInit {
   chiffreAffaireJour!: ChiffreAffaireJour[];
   colonneChiffreAffaireJour: string[] = ['date', 'ca'];
   dataSourceChiffreAffaireJour!: MatTableDataSource<ChiffreAffaireJour>;
+  loadingCAJour: boolean = false;
 
   constructor(private _liveAnnouncer: LiveAnnouncer) {
     this.listeDureeReparation = [];
@@ -144,6 +145,7 @@ export class StatistiqueComponent implements OnInit {
   }
 
   afficherCAJour() {
+    this.loadingCAJour = true;
     this.chiffreAffaireJour = [];
     let date1 = (document.getElementById('date1') as HTMLInputElement)!.value;
     let j1 = date1.split('/')[0];
@@ -164,8 +166,7 @@ export class StatistiqueComponent implements OnInit {
       }
     })
     .then(response => {
-      this.isLoading = false;
-      this.error = false;
+      this.loadingCAJour = false;
       const rep = response.json();
       const code = response.status;
       if(code == 200) {
@@ -184,6 +185,7 @@ export class StatistiqueComponent implements OnInit {
       }
     })
     .catch(error => {
+      this.loadingCAJour = false;
       console.error(error);
     })
   }
