@@ -3,8 +3,7 @@
 <div *ngIf="!isLoading && !error" style="overflow-x: auto;">
   <h1>Statistiques</h1>
 
-    <div>
-      <p><b>Le temps de réparation moyen pour une voiture est de : </b>{{tempRepMoyen}}</p>
+    <div style="border-radius: 25px; background-color: white; padding: 2%;">
       <table mat-table [dataSource]="dataSourceListeDureeReparation" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8" style="width: 100%;">
         <ng-container matColumnDef="numero">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Numéro</th>
@@ -29,5 +28,7 @@
         <tr mat-header-row *matHeaderRowDef="colonneListeDureeReparation"></tr>
         <tr mat-row *matRowDef="let row; columns: colonneListeDureeReparation;"></tr>
       </table>
+      <br>
+      <h3 style="font-weight: normal;"><b>Le temps de réparation moyen pour une voiture est de : </b>{{tempRepMoyen}}</h3>
     </div>
 </div>
