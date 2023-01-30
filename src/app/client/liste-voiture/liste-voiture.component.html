@@ -1,7 +1,8 @@
 <header id="top"></header>
 
-
-<div style="padding-left: 10vw; padding-right: 10vw; padding-top: 20px; padding-bottom: 100px; background-color: rgb(216, 228, 228); overflow-x: auto;">
+<app-loading-error *ngIf="error"></app-loading-error>
+<app-loading *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading && !error" style="padding-left: 10vw; padding-right: 10vw; padding-top: 20px; padding-bottom: 100px; background-color: rgb(216, 228, 228); overflow-x: auto;">
   <h1>Liste de vos voitures actuellement dans le garage</h1>
 
 
@@ -64,12 +65,9 @@
       </th>
       <td mat-cell *matCellDef="let element">
         <div style="display: block; min-width: 200px;">
-          <button *ngIf="element.status == 'Déposée'"  style="background-color: #0101ad; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>{{element.status}}</button>
-          <button *ngIf="element.status == 'En cours de réparation'"  style="background-color: #c0a911; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>{{element.status}}</button>
-          <button *ngIf="element.status == 'Réparée'"  style="background-color: darkcyan; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>{{element.status}}</button>
-          <button mat-button class="hover" *ngIf="element.status == 'Réparée'" (click)="recuperer(element.numero)" style="margin-left: 10px; background: linear-gradient(to left, #00dbde, #fc00ff); border-radius: 20px; color: white; height: 2em;">
-            Récupérer
-          </button>
+          <!-- <button *ngIf="element.status == 'Déposée'"  style="background-color: #0101ad; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>{{element.status}}</button> -->
+          <button *ngIf="element.type == 'reception'"  style="background-color: #c0a911; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>En cours de réparation</button>
+          <button *ngIf="element.type == 'validation sortie'"  style="background-color: darkcyan; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>Réparée</button>
         </div>
       </td>
     </ng-container>
@@ -78,22 +76,28 @@
     <ng-container matColumnDef="boutton">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element; let i = index" style="text-align: center;">
-          <div style="display: block; min-width: 200px;">
-            <button id="reparationAvancement" mat-button class="hover" [routerLink]="['/client/reparation-avancement', element.numero]" (click)="makeActive(i)" style="color: inherit; font-weight: normal; z-index: 0; margin-left: 10px;">
+        <button mat-raised-button class="hover" *ngIf="element.type == 'validation sortie' && loading" disabled>
+          <label>Récupérer la voiture</label>
+        </button>
+        <button mat-raised-button class="hover" *ngIf="element.type == 'validation sortie' && !loading" (click)="recuperer(element.numero)">
+          <label>Récupérer la voiture</label>
+        </button>
+          <div *ngIf="element.type == 'reception'" style="display: block; min-width: 200px;">
+            <button id="reparationAvancement" mat-raised-button class="hover" [routerLink]="['/client/reparation-avancement', element.numero]" (click)="makeActive(i)" style="color: inherit; font-weight: normal; z-index: 0; margin-left: 10px;">
               <label>Réparations avec avancement</label>
               <mat-icon>build</mat-icon>
             </button>
             <button id="reparationAvancementIcon" mat-icon-button [routerLink]="['/client/reparation-avancement', element.numero]" (click)="makeActive(i)" style="color: inherit; font-weight: normal; z-index: 0; margin-left: 10px;">
               <mat-icon>build</mat-icon>
             </button>
-            <button id="factureEtatPaiement" mat-button class="hover" [routerLink]="['/client/facture-etat-paiement', element.numero]" (click)="makeActive(i)" style="color: inherit; font-weight: normal; z-index: 0; margin-left: 10px;">
+            <button id="factureEtatPaiement" mat-raised-button class="hover" [routerLink]="['/client/facture-etat-paiement', element.numero]" (click)="makeActive(i)" style="color: inherit; font-weight: normal; z-index: 0; margin-left: 10px;">
               <label>Facture et état de paiement</label>
               <mat-icon>local_atm</mat-icon>
             </button>
             <button id="factureEtatPaiementIcon" mat-icon-button class="hover" [routerLink]="['/client/facture-etat-paiement', element.numero]" (click)="makeActive(i)" style="color: inherit; font-weight: normal; z-index: 0; margin-left: 10px;">
               <mat-icon>local_atm</mat-icon>
             </button>
-            <button id="historiqueReparation" mat-button class="hover" [routerLink]="['/client/historique-reparation', element.numero]" (click)="makeActive(i)" style="color: inherit; font-weight: normal; z-index: 0; margin-left: 10px;">
+            <button id="historiqueReparation" mat-raised-button class="hover" [routerLink]="['/client/historique-reparation', element.numero]" (click)="makeActive(i)" style="color: inherit; font-weight: normal; z-index: 0; margin-left: 10px;">
               <label>Historique des réparations</label>
               <mat-icon>history</mat-icon>
             </button>

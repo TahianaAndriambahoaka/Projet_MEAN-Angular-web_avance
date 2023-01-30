@@ -1,28 +1,33 @@
-<h1 #clientreparationavancement id="clientreparationavancement">Liste des réparations avec l'état d'avancement</h1>
-<p><b>Numéro : </b>{{numero}}</p>
-<p><b>Marque : </b>Toyota Fortuner</p>
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
+<app-loading-error *ngIf="error"></app-loading-error>
+<app-loading *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading && !error">
+  <h1>Liste des réparations avec l'état d'avancement</h1>
+  <p><b>Numéro : </b>{{voiture.numero}}</p>
+  <p><b>Marque : </b>{{voiture.marque}}</p>
+  <table #clientreparationavancement id="clientreparationavancement" mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
 
-  <ng-container matColumnDef="reparation">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-      Réparation
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.reparation}} </td>
-  </ng-container>
-
-
-  <ng-container matColumnDef="etat_avancement">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-      État d'avancement
-    </th>
-    <td mat-cell *matCellDef="let element">
-      <button *ngIf="element.etat_avancement == 'En cours de réparation'"  style="background-color: #c0a911; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>{{element.etat_avancement}}</button>
-      <button *ngIf="element.etat_avancement == 'Réparée'"  style="background-color: darkcyan; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>{{element.etat_avancement}}</button>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="reparation">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+        Réparation
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
 
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <ng-container matColumnDef="etat_avancement">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+        État d'avancement
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button *ngIf="!element.debut_reparation && !element.fin_reparation"  style="background-color: rgb(0, 28, 139); color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>Non réparée</button>
+        <button *ngIf="element.debut_reparation && !element.fin_reparation" style="background-color: #c0a911; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>En cours de réparation</button>
+        <button *ngIf="element.debut_reparation && element.fin_reparation" style="background-color: darkcyan; color: white; border: none; border-radius: 20px; padding: 5px; padding-left: 10px; padding-right: 10px;" disabled>Réparée</button>
+      </td>
+    </ng-container>
 
-</table>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+</div>

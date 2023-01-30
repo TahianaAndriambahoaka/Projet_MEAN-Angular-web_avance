@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -27,11 +27,12 @@ const ELEMENT_DATA = [
   styleUrls: ['./historique-reparation.component.css']
 })
 export class HistoriqueReparationComponent implements AfterViewInit, OnInit {
+  @Input() liste_voiture!: any[];
   displayedColumns: string[] = ['reparation', 'date', 'etat_avancement'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   numero!: string;
   marque!: string;
-  
+
   constructor(private _liveAnnouncer: LiveAnnouncer, private route: ActivatedRoute) {}
 
   ngOnInit() {

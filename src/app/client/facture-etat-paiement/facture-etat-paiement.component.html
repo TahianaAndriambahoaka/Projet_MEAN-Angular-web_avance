@@ -1,87 +1,91 @@
-<h1 #factureetatpaiement id="factureetatpaiement">Facture et l'état de paiement</h1>
-<p><b>Numéro : </b>{{numero}}</p>
-<p><b>Marque : </b>Toyota Fortuner</p>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<app-loading-error *ngIf="error"></app-loading-error>
+<app-loading *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading && !error">
+  <h1>Facture et l'état de paiement</h1>
+  <p><b>Numéro : </b>{{voiture.numero}}</p>
+  <p><b>Marque : </b>{{voiture.marque}}</p>
+  <table #factureetatpaiement id="factureetatpaiement" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef style="border-bottom: 1px solid lightgray;">
-      Type
-    </th>
-    <td mat-cell *matCellDef="let element" style="border-bottom: 1px solid lightgray;"> {{element.type}} </td>
-  </ng-container>
-
-
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef style="border-left: 1px solid lightgray; text-align: right;">
-      Description
-    </th>
-    <td mat-cell *matCellDef="let element" style="border-bottom: 1px solid lightgray; border-left: 1px solid lightgray;"> {{element.description}} </td>
-  </ng-container>
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef style="border-bottom: 1px solid lightgray;">
+        Type
+      </th>
+      <td mat-cell *matCellDef="let element" style="border-bottom: 1px solid lightgray;"> {{element.type}} </td>
+    </ng-container>
 
 
-  <ng-container matColumnDef="quantite">
-    <th mat-header-cell *matHeaderCellDef style="border-left: 1px solid lightgray; text-align: right;">
-      Quantité
-    </th>
-    <td mat-cell *matCellDef="let element" style="border-bottom: 1px solid lightgray; border-left: 1px solid lightgray; text-align: right;"> {{element.quantite | separateurMiller}} </td>
-  </ng-container>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef style="border-left: 1px solid lightgray; text-align: right;">
+        Description
+      </th>
+      <td mat-cell *matCellDef="let element" style="border-bottom: 1px solid lightgray; border-left: 1px solid lightgray;"> {{element.description}} </td>
+    </ng-container>
 
 
-
-  <ng-container matColumnDef="prix-unitaire">
-    <th mat-header-cell *matHeaderCellDef style="border-left: 1px solid lightgray; text-align: right;">
-      Prix unitaire
-    </th>
-    <td mat-cell *matCellDef="let element" style="border-bottom: 1px solid lightgray; border-left: 1px solid lightgray; text-align: right;"> {{element.prix_unitaire | separateurMiller}} Ariary</td>
-  </ng-container>
+    <ng-container matColumnDef="quantite">
+      <th mat-header-cell *matHeaderCellDef style="border-left: 1px solid lightgray; text-align: right;">
+        Quantité
+      </th>
+      <td mat-cell *matCellDef="let element" style="border-bottom: 1px solid lightgray; border-left: 1px solid lightgray; text-align: right;"> {{element.quantite | separateurMiller}} </td>
+    </ng-container>
 
 
 
-  <ng-container matColumnDef="montant">
-    <th mat-header-cell *matHeaderCellDef style="border-left: 1px solid lightgray; text-align: right;">
-      Montant
-    </th>
-    <td mat-cell *matCellDef="let element" style="border-bottom: 1px solid lightgray; border-left: 1px solid lightgray; text-align: right;"> {{element.montant | separateurMiller}} Ariary</td>
-  </ng-container>
+    <ng-container matColumnDef="prix-unitaire">
+      <th mat-header-cell *matHeaderCellDef style="border-left: 1px solid lightgray; text-align: right;">
+        Prix unitaire
+      </th>
+      <td mat-cell *matCellDef="let element" style="border-bottom: 1px solid lightgray; border-left: 1px solid lightgray; text-align: right;"> {{element.prix_unitaire | separateurMiller}} Ariary</td>
+    </ng-container>
 
 
-  <!-- Footer vide -->
-  <ng-container matColumnDef="footerVide">
-    <td mat-footer-cell *matFooterCellDef style="border: 0;"></td>
-  </ng-container>
-  <ng-container matColumnDef="footerVide2">
-    <td mat-footer-cell *matFooterCellDef style="border: 0; border-top: 1px solid gray;"></td>
-  </ng-container>
 
-  <!-- Footer Montant total -->
-  <ng-container matColumnDef="footerMontantTotal">
-    <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; border-top: 1px solid gray; font-weight: bold;"> Montant total </td>
-  </ng-container>
-  <ng-container matColumnDef="footerMontantTotalValeur">
-    <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; border-top: 1px solid gray; font-weight: bold; text-align: right;"> {{montantTotal | separateurMiller}} Ariary </td>
-  </ng-container>
-
-  <!-- Footer Montant payé -->
-  <ng-container matColumnDef="footerMontantPaye">
-    <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; font-weight: bold;"> Montant payé </td>
-  </ng-container>
-  <ng-container matColumnDef="footerMontantPayeValeur">
-    <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; font-weight: bold; text-align: right;"> {{montantPaye | separateurMiller}} Ariary </td>
-  </ng-container>
-
-  <!-- Footer Montant à payer -->
-  <ng-container matColumnDef="footerMontantAPaye">
-    <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; font-weight: bold;"> Montant à payer </td>
-  </ng-container>
-  <ng-container matColumnDef="footerMontantAPayeValeur">
-    <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; font-weight: bold; text-align: right;"> {{montantAPaye | separateurMiller}} Ariary </td>
-  </ng-container>
+    <ng-container matColumnDef="montant">
+      <th mat-header-cell *matHeaderCellDef style="border-left: 1px solid lightgray; text-align: right;">
+        Montant
+      </th>
+      <td mat-cell *matCellDef="let element" style="border-bottom: 1px solid lightgray; border-left: 1px solid lightgray; text-align: right;"> {{element.montant | separateurMiller}} Ariary</td>
+    </ng-container>
 
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns" style="background-color: rgba(211, 211, 211, 0.315); text-align: center;"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  <tr mat-footer-row *matFooterRowDef="['footerVide2', 'footerVide2', 'footerVide2', 'footerMontantTotal', 'footerMontantTotalValeur']"></tr>
-  <tr mat-footer-row *matFooterRowDef="['footerVide', 'footerVide', 'footerVide', 'footerMontantPaye', 'footerMontantPayeValeur']"></tr>
-  <tr mat-footer-row *matFooterRowDef="['footerVide', 'footerVide', 'footerVide', 'footerMontantAPaye', 'footerMontantAPayeValeur']"></tr>
+    <!-- Footer vide -->
+    <ng-container matColumnDef="footerVide">
+      <td mat-footer-cell *matFooterCellDef style="border: 0;"></td>
+    </ng-container>
+    <ng-container matColumnDef="footerVide2">
+      <td mat-footer-cell *matFooterCellDef style="border: 0; border-top: 1px solid gray;"></td>
+    </ng-container>
 
-</table>
+    <!-- Footer Montant total -->
+    <ng-container matColumnDef="footerMontantTotal">
+      <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; border-top: 1px solid gray; font-weight: bold;"> Montant total </td>
+    </ng-container>
+    <ng-container matColumnDef="footerMontantTotalValeur">
+      <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; border-top: 1px solid gray; font-weight: bold; text-align: right;"> {{montantTotal | separateurMiller}} Ariary </td>
+    </ng-container>
+
+    <!-- Footer Montant payé -->
+    <ng-container matColumnDef="footerMontantPaye">
+      <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; font-weight: bold;"> Montant payé </td>
+    </ng-container>
+    <ng-container matColumnDef="footerMontantPayeValeur">
+      <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; font-weight: bold; text-align: right;"> {{montantPaye | separateurMiller}} Ariary </td>
+    </ng-container>
+
+    <!-- Footer Montant à payer -->
+    <ng-container matColumnDef="footerMontantAPaye">
+      <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; font-weight: bold;"> Montant à payer </td>
+    </ng-container>
+    <ng-container matColumnDef="footerMontantAPayeValeur">
+      <td mat-footer-cell *matFooterCellDef style="border-left: 1px solid lightgray; font-weight: bold; text-align: right;"> {{montantAPaye | separateurMiller}} Ariary </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" style="background-color: rgba(211, 211, 211, 0.315); text-align: center;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="['footerVide2', 'footerVide2', 'footerVide2', 'footerMontantTotal', 'footerMontantTotalValeur']"></tr>
+    <tr mat-footer-row *matFooterRowDef="['footerVide', 'footerVide', 'footerVide', 'footerMontantPaye', 'footerMontantPayeValeur']"></tr>
+    <tr mat-footer-row *matFooterRowDef="['footerVide', 'footerVide', 'footerVide', 'footerMontantAPaye', 'footerMontantAPayeValeur']"></tr>
+
+  </table>
+</div>
